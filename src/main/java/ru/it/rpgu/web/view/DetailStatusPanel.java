@@ -1,18 +1,21 @@
 package ru.it.rpgu.web.view;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.OptionGroup;
 import com.vaadin.ui.VerticalLayout;
 
 public class DetailStatusPanel extends VerticalLayout {
 	private static final String DETAIL_BY_STATUS = "Детализация по статусам:";
 	final List<StatusCheckBox> checkList;
 	final CheckBox mainCheckBox;
+	final OptionGroup checkBoxGroup;
 
 	public DetailStatusPanel() {
 		super();
@@ -21,29 +24,30 @@ public class DetailStatusPanel extends VerticalLayout {
 		
 		mainCheckBox = new CheckBox(StatusValue.ALL.getValue());
 		addComponent(mainCheckBox);
-		final VerticalLayout otherStatusLayout = new VerticalLayout();
-		addComponent(otherStatusLayout);
+		checkBoxGroup = new OptionGroup();
+		checkBoxGroup.setMultiSelect(true);
+		addComponent(checkBoxGroup);
 
 		mainCheckBox.addValueChangeListener(new ValueChangeListener() {
 
 			@Override
 			public void valueChange(ValueChangeEvent event) {
-				otherStatusLayout.setEnabled(!mainCheckBox.getValue());
+				checkBoxGroup.setEnabled(!mainCheckBox.getValue());
 			}
 		});
 
 		checkList = new ArrayList<StatusCheckBox>();
-		buildMainLayout(otherStatusLayout);
+		buildMainLayout(checkBoxGroup);
 	}
 
-	private void buildMainLayout(VerticalLayout layout) {
-		layout.addComponent(addCheckBox(StatusValue.SEND_TO_OFFICE));
-		layout.addComponent(addCheckBox(StatusValue.ERROR_SENDING_TO_OFFICE));
-		layout.addComponent(addCheckBox(StatusValue.IN_REVIEWING));
-		layout.addComponent(addCheckBox(StatusValue.REQUIRED_ADDITIONAL_INFO));
-		layout.addComponent(addCheckBox(StatusValue.EXECUTED));
-		layout.addComponent(addCheckBox(StatusValue.DENIED));
-		layout.addComponent(addCheckBox(StatusValue.CANCELLED));
+	private void buildMainLayout(OptionGroup checkBoxGroup) {
+		checkBoxGroup.addItem(StatusValue.SEND_TO_OFFICE);
+		checkBoxGroup.addItem(StatusValue.ERROR_SENDING_TO_OFFICE);
+		checkBoxGroup.addItem(StatusValue.IN_REVIEWING);
+		checkBoxGroup.addItem(StatusValue.REQUIRED_ADDITIONAL_INFO);
+		checkBoxGroup.addItem(StatusValue.EXECUTED);
+		checkBoxGroup.addItem(StatusValue.DENIED);
+		checkBoxGroup.addItem(StatusValue.CANCELLED);
 	}
 
 	private CheckBox addCheckBox(StatusValue status) {
@@ -53,22 +57,16 @@ public class DetailStatusPanel extends VerticalLayout {
 		return checkBox;
 	}
 
-	public boolean isAllCheck() {
+	private boolean isAllCheck() {
 		return mainCheckBox.getValue();
 	}
 
 	public List<StatusValue> getStatuses() {
-		List<StatusValue> result = new ArrayList<StatusValue>();
-		if (!isAllCheck()) {
-			for (StatusCheckBox checkBox : checkList) {
-				if (checkBox.getValue()) {
-					result.add(checkBox.getStatusValue());
-				}
-			}
+		if (isAllCheck()) {
+			return Arrays.asList(StatusValue.ALL);
 		} else {
-			result.add(StatusValue.ALL);
+			return (List<StatusValue>) checkBoxGroup.getValue();
 		}
-		return result;
 	}
 
 	private class StatusCheckBox extends CheckBox {
