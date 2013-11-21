@@ -6,6 +6,7 @@ import java.util.List;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.CustomComponent;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.VerticalLayout;
@@ -43,11 +44,20 @@ class ReportForm extends CustomComponent {
 		Label header = new Label("Отчеты");
 		mainLayout.addComponent(header);
 
+		HorizontalLayout filterPanel = new HorizontalLayout();
+		mainLayout.addComponent(filterPanel);
+		
+		VerticalLayout leftPanel = new VerticalLayout();
+		filterPanel.addComponent(leftPanel);
+		
 		NativeSelect reportTypeSelect = buildReportTypeSelect();
-		mainLayout.addComponent(reportTypeSelect);
+		leftPanel.addComponent(reportTypeSelect);
 
 		DateIntervalWidget dateInterval = new DateIntervalWidget();
-		mainLayout.addComponent(dateInterval.getView());
+		leftPanel.addComponent(dateInterval.getView());
+		
+		DetailStatusPanel rightPanel = new DetailStatusPanel();
+		filterPanel.addComponent(rightPanel);
 
 		return mainLayout;
 	}
