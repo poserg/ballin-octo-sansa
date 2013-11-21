@@ -2,6 +2,8 @@ package ru.it.rpgu.web;
 
 import javax.servlet.annotation.WebServlet;
 
+import ru.it.rpgu.web.view.ReportFormController;
+
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.VaadinRequest;
@@ -59,8 +61,8 @@ public class MyVaadinUI extends UI
         });
         layout.addComponent(button);
         
-        ReportForm reportForm = new ReportForm();
-        layout.addComponent(reportForm);
+        ReportFormController reportForm = new ReportFormController();
+        layout.addComponent(reportForm.getView());
     }
 
 }

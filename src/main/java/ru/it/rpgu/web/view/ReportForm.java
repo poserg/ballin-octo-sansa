@@ -1,4 +1,4 @@
-package ru.it.rpgu.web;
+package ru.it.rpgu.web.view;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +14,7 @@ import com.vaadin.ui.VerticalLayout;
  * @author Sergey Popov (sergey_popov@relex.ru)
  * 
  */
-public class ReportForm extends CustomComponent {
+class ReportForm extends CustomComponent {
 
 	private static final String ОТЧЕТ_ПО_ЗАЯВКАМ_В_РАЗРЕЗЕ_УСЛУГ = "Отчет по заявкам в разрезе услуг";
 	private static final String ОТЧЕТ_ПО_ЗАЯВКАМ_В_РАЗРЕЗЕ_ВЕДОМСТВ_С_ДЕТАЛИЗАЦИЕЙ_ПО_СТАТУСАМ = "Отчет по заявкам в разрезе ведомств с детализацией по статусам";
@@ -45,6 +45,9 @@ public class ReportForm extends CustomComponent {
 
 		NativeSelect reportTypeSelect = buildReportTypeSelect();
 		mainLayout.addComponent(reportTypeSelect);
+
+		DateIntervalWidget dateInterval = new DateIntervalWidget();
+		mainLayout.addComponent(dateInterval.getView());
 
 		return mainLayout;
 	}
