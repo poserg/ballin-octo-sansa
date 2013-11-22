@@ -1,11 +1,14 @@
 package ru.it.rpgu.web.view;
 
+import java.util.Arrays;
+import java.util.List;
+
 import ru.it.rpgu.web.view.FilterController.IFilterView;
 
-import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Layout;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.VerticalLayout;
 
@@ -15,12 +18,25 @@ import com.vaadin.ui.VerticalLayout;
  */
 public class FilterView extends VerticalLayout implements IFilterView {
 
-	VerticalLayout rightLayout = new VerticalLayout();
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	final List<ReportTypeEnum> options = Arrays.asList(ReportTypeEnum.OFFICE,
+			ReportTypeEnum.OFFICE_AND_STATUSES, ReportTypeEnum.SERVICE,
+			ReportTypeEnum.SERVICE_AND_STATUSES);
+	final VerticalLayout rightLayout = new VerticalLayout();
+	final VerticalLayout bottomLayout = new VerticalLayout();
+	
+	NativeSelect select;
+	DetailStatusPanel detailStatusPanel;
+	ServiceTypeWidget serviceTypeWidget;
 
 	public FilterView() {
 		super();
 
 		addComponent(buildLayout());
+		addComponent(bottomLayout);
 	}
 
 	private HorizontalLayout buildLayout() {
@@ -41,24 +57,62 @@ public class FilterView extends VerticalLayout implements IFilterView {
 	}
 
 	private NativeSelect buildReportTypeSelect() {
-		final NativeSelect select = new NativeSelect("Выберите отчет", options);
+		select = new NativeSelect("Выберите отчет", options);
 		select.setNullSelectionAllowed(false);
-		select.setValue(options.get(0));
-
-		select.addValueChangeListener(new ValueChangeListener() {
-
-			@Override
-			public void valueChange(ValueChangeEvent event) {
-				select.getValue();
-			}
-		});
+		select.setImmediate(true);
 		return select;
 	}
 
 	@Override
+	public void setReportType(ReportTypeEnum reportType) {
+		select.setValue(reportType);
+	}
+
+	@Override
 	public void setRightLayout(Component component) {
-		rightLayout.removeAllComponents();
+		setComponentToLayout(rightLayout, component);
+	}
+
+	/**
+	 * @param component
+	 */
+	private void setComponentToLayout(Layout layout, Component component) {
+		layout.removeAllComponents();
 		if (component != null)
-			rightLayout.addComponent(component);
+			layout.addComponent(component);
+	}
+	
+	@Override
+	public void setBottomLayout(Component component) {
+		setComponentToLayout(bottomLayout, component);
+	}
+
+	@Override
+	public void setChangeReportTypeListener(ValueChangeListener listener) {
+		select.addValueChangeListener(listener);
+	}
+
+	@Override
+	public Component getDetailStatusPanel() {
+		if (detailStatusPanel == null)
+			detailStatusPanel = new DetailStatusPanel();
+		return detailStatusPanel;
+	}
+
+	@Override
+	public Component getServiceTypePanel() {
+		if (serviceTypeWidget == null)
+			serviceTypeWidget = new ServiceTypeWidget();
+		return serviceTypeWidget.getView();
+	}
+
+	@Override
+	public ReportTypeEnum getCurrentReportType() {
+		return (ReportTypeEnum) select.getValue();
+	}
+
+	@Override
+	public Component getMainLayout() {
+		return this;
 	}
 }

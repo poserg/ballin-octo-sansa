@@ -13,7 +13,8 @@ public class ReportFormController {
 	final ReportForm view;
 
 	public ReportFormController() {
-		view = new ReportForm();
+		FilterController filterController = new FilterController();
+		view = new ReportForm(filterController.getView());
 		setHandlers();
 	}
 	

@@ -1,6 +1,6 @@
 package ru.it.rpgu.web.view;
 
-import com.vaadin.ui.AbstractLayout;
+import ru.it.rpgu.web.view.FilterController.IFilterView;
 
 /**
  * @author Sergey Popov (sergey_popov@relex.ru)
@@ -8,5 +8,9 @@ import com.vaadin.ui.AbstractLayout;
  */
 interface IFilterStrategy {
 
-	AbstractLayout buildFilterLayout();
+	/**
+	 * Построение формы фильтра.
+	 * @return
+	 */
+	void buildFilterLayout(IFilterView view);
 }

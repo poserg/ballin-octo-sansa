@@ -1,6 +1,6 @@
 package ru.it.rpgu.web.view;
 
-import com.vaadin.data.Container;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.OptionGroup;
 
 /**
@@ -22,7 +22,7 @@ public class ServiceTypeWidget {
 		view.addItem(ServiceType.REGIONAL);
 	}
 	
-	public Container getView() {
+	public Component getView() {
 		return view;
 	}
 	
