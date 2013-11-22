@@ -1,8 +1,10 @@
-package ru.it.rpgu.web.view;
+package ru.it.rpgu.web.view.filter.view;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import ru.it.rpgu.web.view.filter.StatusValue;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;

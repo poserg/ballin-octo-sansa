@@ -1,10 +1,16 @@
-package ru.it.rpgu.web.view;
+package ru.it.rpgu.web.view.filter;
+
+import ru.it.rpgu.web.view.filter.strategies.IFilterStrategy;
+import ru.it.rpgu.web.view.filter.strategies.OfficeAndStatusesFilterStrategy;
+import ru.it.rpgu.web.view.filter.strategies.OfficeFilterStrategy;
+import ru.it.rpgu.web.view.filter.strategies.ServiceAndStatusesFilterStrategy;
+import ru.it.rpgu.web.view.filter.strategies.ServiceFilterStrategy;
 
 /**
  * @author Sergey Popov (sergey_popov@relex.ru)
  *
  */
-enum ReportTypeEnum {
+public enum ReportTypeEnum {
 	SERVICE("Отчет по заявкам в разрезе услуг", new ServiceFilterStrategy()),
 	SERVICE_AND_STATUSES("Отчет по заявкам в разрезе услуг с детализацией по статусам", new ServiceAndStatusesFilterStrategy()),
 	OFFICE("Отчет по заявкам в разрезе ведомств", new OfficeFilterStrategy()),

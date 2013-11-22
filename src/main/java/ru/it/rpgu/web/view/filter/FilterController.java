@@ -1,4 +1,7 @@
-package ru.it.rpgu.web.view;
+package ru.it.rpgu.web.view.filter;
+
+import ru.it.rpgu.web.view.filter.strategies.IFilterStrategy;
+import ru.it.rpgu.web.view.filter.view.FilterView;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -48,6 +51,12 @@ public class FilterController {
 		 */
 		ReportTypeEnum getCurrentReportType();
 		
+		/**
+		 * Получить виджет с дополнительными параметрами.
+		 * @return
+		 */
+		Component getAddParameterComponent();
+		
 		Component getMainLayout();
 		
 		/**
@@ -55,6 +64,12 @@ public class FilterController {
 		 * @param reportType
 		 */
 		void setReportType(ReportTypeEnum reportType);
+		
+		/**
+		 * Добавление виджета в нижнюю панель без удаления существующих.
+		 * @param component
+		 */
+		void addComponentToBottomLayout(Component component);
 	}
 
 	final IFilterView view;

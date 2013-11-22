@@ -1,4 +1,4 @@
-package ru.it.rpgu.web.view;
+package ru.it.rpgu.web.view.filter.view;
 
 import java.util.Date;
 

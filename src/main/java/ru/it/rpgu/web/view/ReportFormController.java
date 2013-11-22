@@ -3,6 +3,8 @@
  */
 package ru.it.rpgu.web.view;
 
+import ru.it.rpgu.web.view.filter.FilterController;
+
 import com.vaadin.ui.Component;
 
 /**

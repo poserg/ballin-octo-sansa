@@ -1,9 +1,10 @@
-package ru.it.rpgu.web.view;
+package ru.it.rpgu.web.view.filter.view;
 
 import java.util.Arrays;
 import java.util.List;
 
-import ru.it.rpgu.web.view.FilterController.IFilterView;
+import ru.it.rpgu.web.view.filter.FilterController.IFilterView;
+import ru.it.rpgu.web.view.filter.ReportTypeEnum;
 
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.Component;
@@ -31,6 +32,7 @@ public class FilterView extends VerticalLayout implements IFilterView {
 	NativeSelect select;
 	DetailStatusPanel detailStatusPanel;
 	ServiceTypeWidget serviceTypeWidget;
+	AddParameterWidget addParameterWidget;
 
 	public FilterView() {
 		super();
@@ -105,6 +107,13 @@ public class FilterView extends VerticalLayout implements IFilterView {
 			serviceTypeWidget = new ServiceTypeWidget();
 		return serviceTypeWidget.getView();
 	}
+	
+	@Override
+	public Component getAddParameterComponent() {
+		if (addParameterWidget == null)
+			addParameterWidget = new AddParameterWidget();
+		return addParameterWidget.getView();
+	}
 
 	@Override
 	public ReportTypeEnum getCurrentReportType() {
@@ -114,5 +123,10 @@ public class FilterView extends VerticalLayout implements IFilterView {
 	@Override
 	public Component getMainLayout() {
 		return this;
+	}
+
+	@Override
+	public void addComponentToBottomLayout(Component component) {
+		bottomLayout.addComponent(component);
 	}
 }

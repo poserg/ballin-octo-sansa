@@ -1,6 +1,7 @@
-package ru.it.rpgu.web.view;
+package ru.it.rpgu.web.view.filter.strategies;
 
-import ru.it.rpgu.web.view.FilterController.IFilterView;
+import ru.it.rpgu.web.view.filter.FilterController;
+import ru.it.rpgu.web.view.filter.FilterController.IFilterView;
 
 /**
  * @author Sergey Popov
