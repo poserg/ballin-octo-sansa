@@ -8,6 +8,7 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -25,25 +26,30 @@ class ReportForm extends CustomComponent implements IReportForm {
 	private static final long serialVersionUID = -4439484301300996076L;
 
 	Button formButton, topExportToExcellButton, bottomExportToExcellButton;
+	HorizontalLayout filterLayout, tableLayout;
 
-	public ReportForm(Component filterView, Component tableView) {
-		VerticalLayout mainLayout = buildMainLayout(filterView, tableView);
+	public ReportForm() {
+		VerticalLayout mainLayout = buildMainLayout();
 		setCompositionRoot(mainLayout);
 	}
 
-	private VerticalLayout buildMainLayout(Component filterView, Component tableView) {
+	private VerticalLayout buildMainLayout() {
 		VerticalLayout mainLayout = new VerticalLayout();
 
 		Label header = new Label(REPORTS);
+		
+		filterLayout = new HorizontalLayout();
 		
 		HorizontalLayout buttonLayout = new HorizontalLayout();
 		formButton = new Button(FORM);
 		topExportToExcellButton = new Button(EXPORT_TO_EXCEL);
 		buttonLayout.addComponents(formButton, topExportToExcellButton);
 
+		tableLayout = new HorizontalLayout();
+		
 		bottomExportToExcellButton = new Button(EXPORT_TO_EXCEL);
 		
-		mainLayout.addComponents(header, filterView, buttonLayout, tableView, bottomExportToExcellButton);
+		mainLayout.addComponents(header, filterLayout, buttonLayout, tableLayout, bottomExportToExcellButton);
 		
 		return mainLayout;
 	}
@@ -63,5 +69,22 @@ class ReportForm extends CustomComponent implements IReportForm {
 		topExportToExcellButton.addClickListener(clickListener);
 		bottomExportToExcellButton.addClickListener(clickListener);
 	}
+	
+	@Override
+	public void setFilterView(Component filterView) {
+		setViewToLayout(filterLayout, filterView);
+	}
 
+	@Override
+	public void setTableView(Component tableView) {
+		setViewToLayout(tableLayout, tableView);
+	}
+
+	/**
+	 * @param view
+	 */
+	public void setViewToLayout(Layout layout, Component view) {
+		layout.removeAllComponents();
+		layout.addComponent(view);
+	}
 }

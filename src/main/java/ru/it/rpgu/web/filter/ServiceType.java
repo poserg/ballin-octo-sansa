@@ -1,10 +1,10 @@
-package ru.it.rpgu.web.filter.view;
+package ru.it.rpgu.web.filter;
 
 /**
  * @author Sergey Popov (sergey_popov@relex.ru)
  *
  */
-enum ServiceType {
+public enum ServiceType {
 	ALL("Все услуги"),
 	MUNICIPAL("Муниципальные услуги"),
 	REGIONAL("Региональные услуги");

@@ -1,6 +1,7 @@
 package ru.it.rpgu.web.filter.strategies;
 
 import ru.it.rpgu.web.filter.FilterController.IFilterView;
+import ru.it.rpgu.web.filter.FilterState;
 
 /**
  * @author Sergey Popov
@@ -18,4 +19,15 @@ public class ServiceAndStatusesFilterStrategy implements IFilterStrategy {
 		view.addComponentToBottomLayout(view.getAddParameterComponent());
 	}
 
+	@Override
+	public FilterState getCurrentFilterState(IFilterView view) {
+		FilterState filterState = new FilterState();
+		filterState.setFromDate(view.getFromDate());
+		filterState.setToDate(view.getToDate());
+		filterState.setCheckedStatuses(view.getCheckedStatuses());
+		filterState.setServiceType(view.getServiceType());
+		filterState.setServiceCategory(view.getServiceCategory());
+		filterState.setLifeSituation(view.getLifeSituation());
+		return filterState;
+	}
 }

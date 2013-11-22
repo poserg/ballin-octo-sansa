@@ -1,7 +1,9 @@
 package ru.it.rpgu.web.filter;
 
+import java.util.Date;
+import java.util.List;
+
 import ru.it.rpgu.web.filter.strategies.IFilterStrategy;
-import ru.it.rpgu.web.filter.view.FilterView;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -70,6 +72,42 @@ public class FilterController {
 		 * @param component
 		 */
 		void addComponentToBottomLayout(Component component);
+		
+		/**
+		 * Получить дату начала.
+		 * @return
+		 */
+		Date getFromDate();
+		
+		/**
+		 * Получить дату завершения.
+		 * @return
+		 */
+		Date getToDate();
+		
+		/**
+		 * Получить список выбранных статусов.
+		 * @return
+		 */
+		List<StatusValue> getCheckedStatuses();
+		
+		/**
+		 * Получить тип услуг.
+		 * @return
+		 */
+		ServiceType getServiceType();
+		
+		/**
+		 * Следует ли отображать категории услуг.
+		 * @return
+		 */
+		boolean getServiceCategory();
+		
+		/**
+		 * Следует ли отображать жизненные ситуации.
+		 * @return
+		 */
+		boolean getLifeSituation();
 	}
 
 	final IFilterView view;
@@ -85,15 +123,31 @@ public class FilterController {
 	private void setHandlers() {
 		view.setChangeReportTypeListener(new ValueChangeListener() {
 			
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void valueChange(ValueChangeEvent event) {
-				IFilterStrategy strategy = view.getCurrentReportType().getStrategy();
+				IFilterStrategy strategy = getCurrentFilterStrategy();
 				strategy.buildFilterLayout(view);
 			}
+
 		});
 	}
 	
 	public Component getView() {
 		return view.getMainLayout();
+	}
+
+	/**
+	 * @return
+	 */
+	private IFilterStrategy getCurrentFilterStrategy() {
+		IFilterStrategy strategy = view.getCurrentReportType().getStrategy();
+		return strategy;
+	}
+	
+	public FilterState getCurrentFilterState() {
+		IFilterStrategy currentFilterStrategy = getCurrentFilterStrategy();
+		return currentFilterStrategy.getCurrentFilterState(view);
 	}
 }

@@ -1,10 +1,14 @@
-package ru.it.rpgu.web.filter.view;
+package ru.it.rpgu.web.filter;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import ru.it.rpgu.web.filter.FilterController.IFilterView;
-import ru.it.rpgu.web.filter.ReportTypeEnum;
+import ru.it.rpgu.web.filter.view.AddParameterWidget;
+import ru.it.rpgu.web.filter.view.DateIntervalWidget;
+import ru.it.rpgu.web.filter.view.DetailStatusPanel;
+import ru.it.rpgu.web.filter.view.ServiceTypeWidget;
 
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.Component;
@@ -17,7 +21,7 @@ import com.vaadin.ui.VerticalLayout;
  * @author Sergey Popov (sergey_popov@relex.ru)
  * 
  */
-public class FilterView extends VerticalLayout implements IFilterView {
+class FilterView extends VerticalLayout implements IFilterView {
 
 	/**
 	 * 
@@ -30,6 +34,7 @@ public class FilterView extends VerticalLayout implements IFilterView {
 	final VerticalLayout bottomLayout = new VerticalLayout();
 	
 	NativeSelect select;
+	DateIntervalWidget dateInterval;
 	DetailStatusPanel detailStatusPanel;
 	ServiceTypeWidget serviceTypeWidget;
 	AddParameterWidget addParameterWidget;
@@ -50,7 +55,7 @@ public class FilterView extends VerticalLayout implements IFilterView {
 		NativeSelect reportTypeSelect = buildReportTypeSelect();
 		leftLayout.addComponent(reportTypeSelect);
 
-		DateIntervalWidget dateInterval = new DateIntervalWidget();
+		dateInterval = new DateIntervalWidget();
 		leftLayout.addComponent(dateInterval.getView());
 
 		layout.addComponent(rightLayout);
@@ -128,5 +133,35 @@ public class FilterView extends VerticalLayout implements IFilterView {
 	@Override
 	public void addComponentToBottomLayout(Component component) {
 		bottomLayout.addComponent(component);
+	}
+
+	@Override
+	public Date getFromDate() {
+		return dateInterval.getFromDate();
+	}
+
+	@Override
+	public Date getToDate() {
+		return dateInterval.getToDate();
+	}
+
+	@Override
+	public List<StatusValue> getCheckedStatuses() {
+		return detailStatusPanel.getStatuses();
+	}
+
+	@Override
+	public ServiceType getServiceType() {
+		return serviceTypeWidget.getValue();
+	}
+
+	@Override
+	public boolean getServiceCategory() {
+		return addParameterWidget.getServiceCategoryValue();
+	}
+
+	@Override
+	public boolean getLifeSituation() {
+		return addParameterWidget.getLifeSituationValue();
 	}
 }

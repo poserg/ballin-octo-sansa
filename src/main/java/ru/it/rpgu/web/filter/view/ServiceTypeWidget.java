@@ -1,5 +1,7 @@
 package ru.it.rpgu.web.filter.view;
 
+import ru.it.rpgu.web.filter.ServiceType;
+
 import com.vaadin.ui.Component;
 import com.vaadin.ui.OptionGroup;
 
@@ -20,6 +22,8 @@ public class ServiceTypeWidget {
 		view.addItem(ServiceType.ALL);
 		view.addItem(ServiceType.MUNICIPAL);
 		view.addItem(ServiceType.REGIONAL);
+		
+		view.select(ServiceType.ALL);
 	}
 	
 	public Component getView() {

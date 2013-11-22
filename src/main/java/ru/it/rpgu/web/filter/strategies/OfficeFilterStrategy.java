@@ -1,7 +1,7 @@
 package ru.it.rpgu.web.filter.strategies;
 
-import ru.it.rpgu.web.filter.FilterController;
 import ru.it.rpgu.web.filter.FilterController.IFilterView;
+import ru.it.rpgu.web.filter.FilterState;
 
 /**
  * @author Sergey Popov
@@ -16,6 +16,14 @@ public class OfficeFilterStrategy implements IFilterStrategy {
 	public void buildFilterLayout(IFilterView view) {
 		view.setRightLayout(null);
 		view.setBottomLayout(null);
+	}
+
+	@Override
+	public FilterState getCurrentFilterState(IFilterView view) {
+		FilterState filterState = new FilterState();
+		filterState.setFromDate(view.getFromDate());
+		filterState.setToDate(view.getToDate());
+		return filterState;
 	}
 
 }

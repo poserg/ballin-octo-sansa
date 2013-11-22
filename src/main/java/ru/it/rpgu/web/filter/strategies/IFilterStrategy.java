@@ -1,6 +1,7 @@
 package ru.it.rpgu.web.filter.strategies;
 
 import ru.it.rpgu.web.filter.FilterController.IFilterView;
+import ru.it.rpgu.web.filter.FilterState;
 
 
 /**
@@ -14,4 +15,11 @@ public interface IFilterStrategy {
 	 * @return
 	 */
 	void buildFilterLayout(IFilterView view);
+
+	/**
+	 * Получить текущее состояние фильтра.
+	 * @param view
+	 * @return
+	 */
+	FilterState getCurrentFilterState(IFilterView view);
 }

@@ -1,4 +1,4 @@
-package ru.it.rpgu.web.table.view;
+package ru.it.rpgu.web.table;
 
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Table;
@@ -7,7 +7,7 @@ import com.vaadin.ui.Table;
  * @author Sergey Popov
  *
  */
-public class TableView {
+class TableView {
 
 	private static final String OFFICE_NAME = "Наименование ведомства";
 	private static final String TOTAL = "Итого";

@@ -44,4 +44,12 @@ public class DateIntervalWidget {
 	public Component getView() {
 		return view;
 	}
+	
+	public Date getFromDate() {
+		return view.getFromDate();
+	}
+	
+	public Date getToDate() {
+		return view.getToDate();
+	}
 }

@@ -1,6 +1,5 @@
 package ru.it.rpgu.web.table;
 
-import ru.it.rpgu.web.table.view.TableView;
 
 import com.vaadin.ui.Component;
 

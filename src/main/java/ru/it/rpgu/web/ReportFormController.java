@@ -1,8 +1,10 @@
 package ru.it.rpgu.web;
 
 import ru.it.rpgu.web.filter.FilterController;
+import ru.it.rpgu.web.filter.strategies.IFilterStrategy;
 import ru.it.rpgu.web.table.TableController;
 
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 
@@ -27,18 +29,55 @@ public class ReportFormController {
 		 * @param clickListener
 		 */
 		void setExportToExcelButtonListener(ClickListener clickListener);
+		
+		/**
+		 * Установить представление фильтра.
+		 * @param filterView
+		 */
+		void setFilterView(Component filterView);
+		
+		/**
+		 * Установить представление таблицы.
+		 * @param tableView
+		 */
+		void setTableView(Component tableView);
 	}
 	
 	final IReportForm view;
+	final FilterController filterController;
+	final TableController tableController;
 
 	public ReportFormController() {
-		FilterController filterController = new FilterController();
-		TableController tableController = new TableController();
-		view = new ReportForm(filterController.getView(), tableController.getView());
+		filterController = new FilterController();
+		tableController = new TableController();
+		
+		view = new ReportForm();
+		view.setFilterView(filterController.getView());
+		
 		setHandlers();
 	}
 	
 	private void setHandlers() {
+		view.setFormButtonListener(new ClickListener() {
+			
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				IFilterStrategy currentFilterStrategy = filterController.getCurrentFilterStrategy();
+			}
+		});
+		
+		view.setExportToExcelButtonListener(new ClickListener() {
+			
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
 
 	public Component getView() {
