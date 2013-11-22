@@ -1,10 +1,9 @@
-/**
- * 
- */
 package ru.it.rpgu.web;
 
 import ru.it.rpgu.web.filter.FilterController;
+import ru.it.rpgu.web.table.TableController;
 
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 
 /**
@@ -12,11 +11,30 @@ import com.vaadin.ui.Component;
  *
  */
 public class ReportFormController {
-	final ReportForm view;
+	
+	public interface IReportForm {
+		
+		Component getMainLayout();
+		
+		/**
+		 * Установить слушатель на кнопку Сформировать.
+		 * @param clickListener
+		 */
+		void setFormButtonListener(ClickListener clickListener);
+		
+		/**
+		 * Установить слушатель на кнопки Выгрузить в Excel.
+		 * @param clickListener
+		 */
+		void setExportToExcelButtonListener(ClickListener clickListener);
+	}
+	
+	final IReportForm view;
 
 	public ReportFormController() {
 		FilterController filterController = new FilterController();
-		view = new ReportForm(filterController.getView());
+		TableController tableController = new TableController();
+		view = new ReportForm(filterController.getView(), tableController.getView());
 		setHandlers();
 	}
 	
@@ -24,6 +42,6 @@ public class ReportFormController {
 	}
 
 	public Component getView() {
-		return view;
+		return view.getMainLayout();
 	}
 }
