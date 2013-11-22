@@ -13,6 +13,10 @@ import com.vaadin.ui.Panel;
  */
 class DateIntervalView extends Panel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1183107490041837790L;
 	DateField fromDate;
 	DateField toDate;
 

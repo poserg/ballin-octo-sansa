@@ -12,8 +12,12 @@ import com.vaadin.ui.OptionGroup;
 import com.vaadin.ui.VerticalLayout;
 
 public class DetailStatusPanel extends VerticalLayout {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8069212395641221251L;
 	private static final String DETAIL_BY_STATUS = "Детализация по статусам:";
-	final List<StatusCheckBox> checkList;
+	final List<CheckBox> checkList;
 	final CheckBox mainCheckBox;
 	final OptionGroup checkBoxGroup;
 
@@ -30,13 +34,18 @@ public class DetailStatusPanel extends VerticalLayout {
 
 		mainCheckBox.addValueChangeListener(new ValueChangeListener() {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 6895499615951782277L;
+
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				checkBoxGroup.setEnabled(!mainCheckBox.getValue());
 			}
 		});
 
-		checkList = new ArrayList<StatusCheckBox>();
+		checkList = new ArrayList<CheckBox>();
 		buildMainLayout(checkBoxGroup);
 	}
 
@@ -50,13 +59,6 @@ public class DetailStatusPanel extends VerticalLayout {
 		checkBoxGroup.addItem(StatusValue.CANCELLED);
 	}
 
-	private CheckBox addCheckBox(StatusValue status) {
-		StatusCheckBox checkBox = new StatusCheckBox(status);
-		checkList.add(checkBox);
-
-		return checkBox;
-	}
-
 	private boolean isAllCheck() {
 		return mainCheckBox.getValue();
 	}
@@ -66,22 +68,6 @@ public class DetailStatusPanel extends VerticalLayout {
 			return Arrays.asList(StatusValue.ALL);
 		} else {
 			return (List<StatusValue>) checkBoxGroup.getValue();
-		}
-	}
-
-	private class StatusCheckBox extends CheckBox {
-		private final StatusValue statusValue;
-
-		public StatusCheckBox(StatusValue statusValue) {
-			super(statusValue.getValue());
-			this.statusValue = statusValue;
-		}
-
-		/**
-		 * @return the statusValue
-		 */
-		public StatusValue getStatusValue() {
-			return statusValue;
 		}
 	}
 }

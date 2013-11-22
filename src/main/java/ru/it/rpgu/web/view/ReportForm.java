@@ -14,6 +14,10 @@ import com.vaadin.ui.VerticalLayout;
  */
 class ReportForm extends CustomComponent {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4439484301300996076L;
 	List<ReportStatusEnum> options = Arrays.asList(ReportStatusEnum.SERVICE,
 			ReportStatusEnum.SERVICE_AND_STATUSES, ReportStatusEnum.OFFICE,
 			ReportStatusEnum.OFFICE_AND_STATUSES);
