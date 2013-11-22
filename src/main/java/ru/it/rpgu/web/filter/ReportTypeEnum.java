@@ -1,10 +1,10 @@
-package ru.it.rpgu.web.view.filter;
+package ru.it.rpgu.web.filter;
 
-import ru.it.rpgu.web.view.filter.strategies.IFilterStrategy;
-import ru.it.rpgu.web.view.filter.strategies.OfficeAndStatusesFilterStrategy;
-import ru.it.rpgu.web.view.filter.strategies.OfficeFilterStrategy;
-import ru.it.rpgu.web.view.filter.strategies.ServiceAndStatusesFilterStrategy;
-import ru.it.rpgu.web.view.filter.strategies.ServiceFilterStrategy;
+import ru.it.rpgu.web.filter.strategies.IFilterStrategy;
+import ru.it.rpgu.web.filter.strategies.OfficeAndStatusesFilterStrategy;
+import ru.it.rpgu.web.filter.strategies.OfficeFilterStrategy;
+import ru.it.rpgu.web.filter.strategies.ServiceAndStatusesFilterStrategy;
+import ru.it.rpgu.web.filter.strategies.ServiceFilterStrategy;
 
 /**
  * @author Sergey Popov (sergey_popov@relex.ru)

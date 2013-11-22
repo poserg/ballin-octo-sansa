@@ -1,4 +1,4 @@
-package ru.it.rpgu.web.view.filter.view;
+package ru.it.rpgu.web.filter.view;
 
 /**
  * @author Sergey Popov (sergey_popov@relex.ru)

@@ -1,9 +1,9 @@
 /**
  * 
  */
-package ru.it.rpgu.web.view;
+package ru.it.rpgu.web;
 
-import ru.it.rpgu.web.view.filter.FilterController;
+import ru.it.rpgu.web.filter.FilterController;
 
 import com.vaadin.ui.Component;
 

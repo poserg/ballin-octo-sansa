@@ -1,10 +1,10 @@
-package ru.it.rpgu.web.view.filter.view;
+package ru.it.rpgu.web.filter.view;
 
 import java.util.Arrays;
 import java.util.List;
 
-import ru.it.rpgu.web.view.filter.FilterController.IFilterView;
-import ru.it.rpgu.web.view.filter.ReportTypeEnum;
+import ru.it.rpgu.web.filter.ReportTypeEnum;
+import ru.it.rpgu.web.filter.FilterController.IFilterView;
 
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.Component;

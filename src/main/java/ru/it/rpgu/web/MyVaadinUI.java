@@ -2,7 +2,6 @@ package ru.it.rpgu.web;
 
 import javax.servlet.annotation.WebServlet;
 
-import ru.it.rpgu.web.view.ReportFormController;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;

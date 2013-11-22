@@ -1,4 +1,4 @@
-package ru.it.rpgu.web.view.filter.view;
+package ru.it.rpgu.web.filter.view;
 
 import com.vaadin.ui.Component;
 import com.vaadin.ui.OptionGroup;

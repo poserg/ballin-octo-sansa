@@ -1,7 +1,7 @@
-package ru.it.rpgu.web.view.filter;
+package ru.it.rpgu.web.filter;
 
-import ru.it.rpgu.web.view.filter.strategies.IFilterStrategy;
-import ru.it.rpgu.web.view.filter.view.FilterView;
+import ru.it.rpgu.web.filter.strategies.IFilterStrategy;
+import ru.it.rpgu.web.filter.view.FilterView;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;

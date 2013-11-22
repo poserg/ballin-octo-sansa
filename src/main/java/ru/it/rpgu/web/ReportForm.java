@@ -1,4 +1,4 @@
-package ru.it.rpgu.web.view;
+package ru.it.rpgu.web;
 
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
