@@ -1,7 +1,7 @@
 package ru.it.rpgu.web.filter;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author Sergey Popov
@@ -22,7 +22,7 @@ public class FilterState {
 	/**
 	 * Список выбранных статусов.
 	 */
-	List<StatusValue> checkedStatuses;
+	Set<StatusValue> checkedStatuses;
 
 	/**
 	 * Вид услуг.
@@ -70,14 +70,14 @@ public class FilterState {
 	/**
 	 * @return the checkedStatuses
 	 */
-	public List<StatusValue> getCheckedStatuses() {
+	public Set<StatusValue> getCheckedStatuses() {
 		return checkedStatuses;
 	}
 
 	/**
 	 * @param checkedStatuses the checkedStatuses to set
 	 */
-	public void setCheckedStatuses(List<StatusValue> checkedStatuses) {
+	public void setCheckedStatuses(Set<StatusValue> checkedStatuses) {
 		this.checkedStatuses = checkedStatuses;
 	}
 

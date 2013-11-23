@@ -3,6 +3,7 @@ package ru.it.rpgu.web.filter;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import ru.it.rpgu.web.filter.FilterController.IFilterView;
 import ru.it.rpgu.web.filter.view.AddParameterWidget;
@@ -146,7 +147,7 @@ class FilterView extends VerticalLayout implements IFilterView {
 	}
 
 	@Override
-	public List<StatusValue> getCheckedStatuses() {
+	public Set<StatusValue> getCheckedStatuses() {
 		return detailStatusPanel.getStatuses();
 	}
 

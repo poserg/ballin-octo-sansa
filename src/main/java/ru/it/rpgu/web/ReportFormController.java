@@ -1,7 +1,7 @@
 package ru.it.rpgu.web;
 
 import ru.it.rpgu.web.filter.FilterController;
-import ru.it.rpgu.web.filter.strategies.IFilterStrategy;
+import ru.it.rpgu.web.filter.FilterState;
 import ru.it.rpgu.web.table.TableController;
 
 import com.vaadin.ui.Button.ClickEvent;
@@ -53,6 +53,7 @@ public class ReportFormController {
 		
 		view = new ReportForm();
 		view.setFilterView(filterController.getView());
+		view.setTableView(tableController.getView());
 		
 		setHandlers();
 	}
@@ -64,7 +65,12 @@ public class ReportFormController {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				IFilterStrategy currentFilterStrategy = filterController.getCurrentFilterStrategy();
+				FilterState currentFilterState = filterController
+						.getCurrentFilterState();
+				tableController.setColumns(
+						currentFilterState.getCheckedStatuses(),
+						currentFilterState.getServiceCategory(),
+						currentFilterState.getLifeSituation());
 			}
 		});
 		

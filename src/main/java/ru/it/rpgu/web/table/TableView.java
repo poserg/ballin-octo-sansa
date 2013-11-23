@@ -15,13 +15,34 @@ class TableView {
 	
 	public TableView() {
 		table = new Table();
-		table.addContainerProperty(OFFICE_NAME, String.class, null);
-		
-		table.setFooterVisible(true);
-        table.setColumnFooter(OFFICE_NAME, TOTAL);
 	}
 	
 	public Component getView() {
 		return table;
+	}
+	
+	public void refresh() {
+		removeAllColumns();
+		//table.removeAllItems();
+		table.addContainerProperty(OFFICE_NAME, String.class, null);
+		table.setFooterVisible(true);
+		table.setColumnFooter(OFFICE_NAME, TOTAL);
+	}
+
+	/**
+	 * 
+	 */
+	private void removeAllColumns() {
+		for (Object col : table.getContainerPropertyIds().toArray()) {
+			table.removeContainerProperty(col);
+		}
+	}
+	
+	public void addColumn(String name, Class<?> type) {
+		table.addContainerProperty(name, type, null);
+	}
+	
+	public void addStringColumn(String name) {
+		addColumn(name, String.class);
 	}
 }
