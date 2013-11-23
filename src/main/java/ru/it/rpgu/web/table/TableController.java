@@ -14,6 +14,9 @@ import com.vaadin.ui.Component;
  */
 public class TableController {
 	
+	private static final String TOTAL_APPLICATIONS = "Всего заявок";
+	private static final String LIFE_SITUATION = "Жизненная ситуация";
+	private static final String CATEGORY_OF_SERVICE = "Категория услуг";
 	private final TableView tableView;
 	
 	public TableController() {
@@ -35,14 +38,14 @@ public class TableController {
 		tableView.refresh();
 		
 		if (serviceCategory != null && serviceCategory) {
-			tableView.addStringColumn("Категория услуг");
+			tableView.addStringColumn(CATEGORY_OF_SERVICE);
 		}
 		
 		if (lifeSituation != null && lifeSituation) {
-			tableView.addStringColumn("Жизненная ситуация");
+			tableView.addStringColumn(LIFE_SITUATION);
 		}
 		
-		tableView.addStringColumn("Всего заявок");
+		tableView.addStringColumn(TOTAL_APPLICATIONS);
 		
 		if (checkedStatuses != null) {
 			for (StatusValue statusValue : checkedStatuses) {
