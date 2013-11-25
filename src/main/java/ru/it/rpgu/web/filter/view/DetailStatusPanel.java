@@ -15,9 +15,6 @@ import com.vaadin.ui.OptionGroup;
 import com.vaadin.ui.VerticalLayout;
 
 public class DetailStatusPanel extends VerticalLayout {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 8069212395641221251L;
 	private static final String DETAIL_BY_STATUS = "Детализация по статусам:";
 	
@@ -32,6 +29,7 @@ public class DetailStatusPanel extends VerticalLayout {
 			this.add(StatusValue.EXECUTED);
 			this.add(StatusValue.DENIED);
 			this.add(StatusValue.CANCELLED);
+			this.add(StatusValue.OTHER);
 		}
 	};
 
@@ -44,9 +42,12 @@ public class DetailStatusPanel extends VerticalLayout {
 
 		addComponent(new Label(DETAIL_BY_STATUS));
 		
+		// Все
 		mainCheckBox = new CheckBox(StatusValue.ALL.getValue());
 		mainCheckBox.setValue(true);
 		addComponent(mainCheckBox);
+		
+		// Группа для остальных статусов
 		checkBoxGroup = new OptionGroup();
 		checkBoxGroup.setMultiSelect(true);
 		checkBoxGroup.setEnabled(false);
@@ -54,9 +55,6 @@ public class DetailStatusPanel extends VerticalLayout {
 
 		mainCheckBox.addValueChangeListener(new ValueChangeListener() {
 
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 6895499615951782277L;
 
 			@Override

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package ru.it.rpgu.web.filter;
 
 /**
@@ -15,7 +12,8 @@ public enum StatusValue {
 	REQUIRED_ADDITIONAL_INFO("Требуются дополнительные сведения"),
 	EXECUTED("Исполнено"),
 	DENIED("Отказано"),
-	CANCELLED("Отменено");
+	CANCELLED("Отменено"),
+	OTHER("Прочие статусы");
 	
 	private String value;
 	
