@@ -12,11 +12,11 @@ import com.vaadin.ui.VerticalLayout;
 
 @Theme("rpgu-static-report-theme")
 @SuppressWarnings("serial")
-public class MyVaadinUI extends UI
+public class StaticReportUI extends UI
 {
 
     @WebServlet(value = "/*", asyncSupported = true)
-    @VaadinServletConfiguration(productionMode = false, ui = MyVaadinUI.class, widgetset = "ru.it.rpgu.web.AppWidgetSet")
+    @VaadinServletConfiguration(productionMode = false, ui = StaticReportUI.class, widgetset = "ru.it.rpgu.web.AppWidgetSet")
     public static class Servlet extends VaadinServlet {
     }
 
