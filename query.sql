@@ -51,3 +51,19 @@ select short_name, state_name, count(app_hist_id) from (select application_id as
   where rnk=1;
 [9:52:00 PM] Юлия Пиндюрина: сортировка по убыванию все-таки
 
+
+
+
+select count(application_state_history_id), agency_office_name, state_name from (
+ select 
+ agency_office_name, state_name,
+  pash.application_id,
+  pash.date_inserted,
+  application_state_history_id,
+  dense_rank() over (partition by pash.application_id order by pash.date_inserted desc) rnk
+  from public.po_application_state_history pash, po_application pa 
+ where
+ pa.application_id = pash.application_id
+ and pash.date_inserted >= '2013-11-01'
+ and pash.date_inserted <= '2013-12-31 23:59:59'
+ ) rnk_model where rnk = 1 group by agency_office_name, state_name
