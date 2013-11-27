@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0" xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd">
 
-    <portlet>
-        <portlet-name>static-report</portlet-name>
-        <display-name>RPGU Static Report</display-name>
+   <portlet>
+        <portlet-name>static-report portlet</portlet-name>
+        <display-name>rpgu-static-report-portlet</display-name>
         
         <portlet-class>com.vaadin.server.VaadinPortlet</portlet-class>
         <init-param>
@@ -31,5 +31,11 @@
             <!-- <portlet-mode>edit</portlet-mode> -->
             <!-- <portlet-mode>help</portlet-mode> -->
         </supports>
+        
+        <!-- Not always required but Liferay uses these. -->
+        <portlet-info>
+            <title>rpgu-static-report-portlet</title>
+            <short-title>rpgu-static-report-portlet</short-title>
+        </portlet-info>
     </portlet>
 </portlet-app>
