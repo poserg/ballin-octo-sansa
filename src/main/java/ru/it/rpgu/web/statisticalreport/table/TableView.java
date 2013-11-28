@@ -1,4 +1,4 @@
-package ru.it.rpgu.web.table;
+package ru.it.rpgu.web.statisticalreport.table;
 
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Table;

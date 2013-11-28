@@ -1,6 +1,6 @@
-package ru.it.rpgu.web;
+package ru.it.rpgu.web.statisticalreport;
 
-import ru.it.rpgu.web.ReportFormController.IReportForm;
+import ru.it.rpgu.web.statisticalreport.ReportFormController.IReportForm;
 
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;

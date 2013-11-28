@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ru.it.rpgu.web.filter.view;
+package ru.it.rpgu.web.statisticalreport.filter.view;
 
 import java.util.Date;
 

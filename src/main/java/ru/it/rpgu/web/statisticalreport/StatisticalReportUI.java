@@ -1,4 +1,4 @@
-package ru.it.rpgu.web;
+package ru.it.rpgu.web.statisticalreport;
 
 import javax.servlet.annotation.WebServlet;
 
@@ -15,7 +15,7 @@ public class StatisticalReportUI extends UI
 {
 
     @WebServlet(value = "/*", asyncSupported = true)
-    @VaadinServletConfiguration(productionMode = false, ui = StatisticalReportUI.class, widgetset = "ru.it.rpgu.web.AppWidgetSet")
+    @VaadinServletConfiguration(productionMode = false, ui = StatisticalReportUI.class, widgetset = "ru.it.rpgu.web.statisticalreport.AppWidgetSet")
     public static class Servlet extends VaadinServlet {
     }
 

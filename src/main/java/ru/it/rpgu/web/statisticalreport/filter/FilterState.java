@@ -1,4 +1,4 @@
-package ru.it.rpgu.web.filter;
+package ru.it.rpgu.web.statisticalreport.filter;
 
 import java.util.Date;
 import java.util.Set;

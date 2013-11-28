@@ -8,7 +8,7 @@
         <portlet-class>com.vaadin.server.VaadinPortlet</portlet-class>
         <init-param>
             <name>UI</name>
-            <value>ru.it.rpgu.web.StatisticalReportUI</value>
+            <value>ru.it.rpgu.web.statisticalreport.StatisticalReportUI</value>
         </init-param>
         
         <!--

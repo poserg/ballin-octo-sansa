@@ -1,7 +1,7 @@
-package ru.it.rpgu.web.filter.strategies;
+package ru.it.rpgu.web.statisticalreport.filter.strategies;
 
-import ru.it.rpgu.web.filter.FilterController.IFilterView;
-import ru.it.rpgu.web.filter.FilterState;
+import ru.it.rpgu.web.statisticalreport.filter.FilterState;
+import ru.it.rpgu.web.statisticalreport.filter.FilterController.IFilterView;
 
 
 /**

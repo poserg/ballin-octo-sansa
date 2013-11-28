@@ -1,4 +1,4 @@
-package ru.it.rpgu.web.filter;
+package ru.it.rpgu.web.statisticalreport.filter;
 
 /**
  * @author Sergey Popov (sergey_popov@relex.ru)

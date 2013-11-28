@@ -1,9 +1,9 @@
-package ru.it.rpgu.web.table;
+package ru.it.rpgu.web.statisticalreport.table;
 
 
 import java.util.Set;
 
-import ru.it.rpgu.web.filter.StatusValue;
+import ru.it.rpgu.web.statisticalreport.filter.StatusValue;
 
 import com.vaadin.ui.Component;
 

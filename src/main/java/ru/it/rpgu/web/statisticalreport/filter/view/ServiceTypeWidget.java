@@ -1,6 +1,6 @@
-package ru.it.rpgu.web.filter.view;
+package ru.it.rpgu.web.statisticalreport.filter.view;
 
-import ru.it.rpgu.web.filter.ServiceType;
+import ru.it.rpgu.web.statisticalreport.filter.ServiceType;
 
 import com.vaadin.ui.Component;
 import com.vaadin.ui.OptionGroup;

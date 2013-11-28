@@ -1,11 +1,11 @@
-package ru.it.rpgu.web.filter.view;
+package ru.it.rpgu.web.statisticalreport.filter.view;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import ru.it.rpgu.web.filter.StatusValue;
+import ru.it.rpgu.web.statisticalreport.filter.StatusValue;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;

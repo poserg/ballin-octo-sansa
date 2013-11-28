@@ -1,8 +1,8 @@
-package ru.it.rpgu.web;
+package ru.it.rpgu.web.statisticalreport;
 
-import ru.it.rpgu.web.filter.FilterController;
-import ru.it.rpgu.web.filter.FilterState;
-import ru.it.rpgu.web.table.TableController;
+import ru.it.rpgu.web.statisticalreport.filter.FilterController;
+import ru.it.rpgu.web.statisticalreport.filter.FilterState;
+import ru.it.rpgu.web.statisticalreport.table.TableController;
 
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;

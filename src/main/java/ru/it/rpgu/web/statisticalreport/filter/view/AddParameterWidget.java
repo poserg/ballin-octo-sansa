@@ -1,4 +1,4 @@
-package ru.it.rpgu.web.filter.view;
+package ru.it.rpgu.web.statisticalreport.filter.view;
 
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Component;

@@ -1,15 +1,15 @@
-package ru.it.rpgu.web.filter;
+package ru.it.rpgu.web.statisticalreport.filter;
 
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-import ru.it.rpgu.web.filter.FilterController.IFilterView;
-import ru.it.rpgu.web.filter.view.AddParameterWidget;
-import ru.it.rpgu.web.filter.view.DateIntervalWidget;
-import ru.it.rpgu.web.filter.view.DetailStatusPanel;
-import ru.it.rpgu.web.filter.view.ServiceTypeWidget;
+import ru.it.rpgu.web.statisticalreport.filter.FilterController.IFilterView;
+import ru.it.rpgu.web.statisticalreport.filter.view.AddParameterWidget;
+import ru.it.rpgu.web.statisticalreport.filter.view.DateIntervalWidget;
+import ru.it.rpgu.web.statisticalreport.filter.view.DetailStatusPanel;
+import ru.it.rpgu.web.statisticalreport.filter.view.ServiceTypeWidget;
 
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.Component;
