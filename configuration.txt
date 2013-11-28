@@ -1,0 +1,20 @@
+Интеграция Vaadin 7 в Liferay
+
+Удаление Vaadin 6:
+        1) Удалить каталог liferay-portal-6.1.0-ce-ga1/tomcat-7.0.23/webapps/ROOT/html/VAADIN
+        2) Удалить библиотеку liferay-portal-6.1.0-ce-ga1/tomcat-7.0.23/webapps/ROOT/WEB-INF/lib/vaadin.jar
+
+Установка Vaadin 7:
+        1) скачать Vaadin (на данный момент последняя стабильная версия 7.1.8: https://vaadin.com/downloading?package=release/7.1/7.1.8/vaadin-all-7.1.8.zip)
+        2) извлечь содержимое каталог VAADIN из vaadin/vaadin-server-7.1.8.jar в liferay-portal-6.1.0-ce-ga1/tomcat-7.0.23/webapps/ROOT/html/VAADIN/
+        3) извлечь содержимое каталог VAADIN из vaadin/vaadin-themes-7.1.8.jar в liferay-portal-6.1.0-ce-ga1/tomcat-7.0.23/webapps/ROOT/html/VAADIN/
+        4) извлечь содержимое каталог VAADIN из vaadin/vaadin-client-compiled-7.1.8.jar в liferay-portal-6.1.0-ce-ga1/tomcat-7.0.23/webapps/ROOT/html/VAADIN/
+        5) Скопировать следующие библиотеки в liferay-portal-6.1.0-ce-ga1/tomcat-7.0.23/webapps/ROOT/WEB-INF/lib:
+                - vaadin/vaadin-server-7.1.8.jar
+                - vaadin/vaadin-shared-7.1.8.jar
+                - vaadin/lib/vaadin-shared-deps-1.0.2.jar
+                - vaadin/lib/jsoup-1.6.3.jar
+                
+           В именах библиотек можно удалить версию, чтобы liferay использовал их по умолчанию.
+
+Оригинальная справка по настройке: https://vaadin.com/wiki/-/wiki/Main/Integrating%20Vaadin%207%20with%20Liferay
