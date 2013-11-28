@@ -29,9 +29,9 @@ public class TableController {
 
 	/**
 	 * Создание столбцов.
-	 * @param checkedStatuses
-	 * @param serviceCategory
-	 * @param lifeSituation
+	 * @param checkedStatuses - выбранные статусы
+	 * @param serviceCategory - нужен столбец Категория услуг
+	 * @param lifeSituation - нужен столбец Жизненная ситуация
 	 */
 	public void setColumns(Set<StatusValue> checkedStatuses,
 			Boolean serviceCategory, Boolean lifeSituation) {

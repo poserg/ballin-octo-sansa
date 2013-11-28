@@ -9,7 +9,7 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-@Theme("reindeer")
+@Theme("runo")
 @SuppressWarnings("serial")
 public class StatisticalReportUI extends UI
 {

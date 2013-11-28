@@ -55,10 +55,10 @@ public class ReportFormController {
 		view.setFilterView(filterController.getView());
 		view.setTableView(tableController.getView());
 		
-		setHandlers();
+		setListeners();
 	}
 	
-	private void setHandlers() {
+	private void setListeners() {
 		view.setFormButtonListener(new ClickListener() {
 			
 			private static final long serialVersionUID = 1L;
