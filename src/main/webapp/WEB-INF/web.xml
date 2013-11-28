@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app
-  id="RPGUStaticReportPortlet" version="2.4"
+  id="RPGUStatisticalReportPortlet" version="2.4"
   xmlns="http://java.sun.com/xml/ns/j2ee" 
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
   xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
@@ -13,13 +13,13 @@
 	</context-param>
 
  <servlet>
-  	<servlet-name>static-report</servlet-name>
+  	<servlet-name>statistical-report</servlet-name>
   	<servlet-class>com.vaadin.server.VaadinServlet</servlet-class>
   	<init-param>
   		<description>
   		Vaadin UI class to use</description>
   		<param-name>UI</param-name>
-  		<param-value>ru.it.rpgu.web.StaticReportUI</param-value>
+  		<param-value>ru.it.rpgu.web.StatisticalReportUI</param-value>
   	</init-param>
   	<init-param>
   		<description>
@@ -30,11 +30,11 @@
   </servlet>
 
  <servlet-mapping>
-  	<servlet-name>static-report</servlet-name>
-  	<url-pattern>/StaticReportUIServlet/*</url-pattern>
+  	<servlet-name>statistical-report</servlet-name>
+  	<url-pattern>/StatisticalReportUIServlet/*</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-  	<servlet-name>static-report</servlet-name>
+  	<servlet-name>statistical-report</servlet-name>
   	<url-pattern>/VAADIN/*</url-pattern>
   </servlet-mapping>
 </web-app>

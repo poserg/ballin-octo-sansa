@@ -6,11 +6,11 @@
     <groupId>ru.it.rpgu.portlets</groupId>
     <version>1.0-SNAPSHOT</version>
   </parent>
-	<groupId>ru.it.rpgu.web</groupId>
-	<artifactId>rpgu-static-report-portlet</artifactId>
+	<groupId>ru.it.rpgu.portlets</groupId>
+	<artifactId>rpgu-statistical-report-portlet</artifactId>
 	<packaging>war</packaging>
 	<version>1.0</version>
-	<name>Vaadin Web Application</name>
+	<name>RPGU Statistical Report Portlet</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
