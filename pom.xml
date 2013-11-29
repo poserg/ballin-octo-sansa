@@ -91,6 +91,11 @@
 			<version>3.0.1</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+		    <groupId>ru.it.rpgu</groupId>
+		    <artifactId>rpgu-core-web</artifactId>
+		    <version>1.0-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>

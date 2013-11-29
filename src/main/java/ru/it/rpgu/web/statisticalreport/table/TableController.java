@@ -3,7 +3,7 @@ package ru.it.rpgu.web.statisticalreport.table;
 
 import java.util.Set;
 
-import ru.it.rpgu.web.statisticalreport.filter.StatusValue;
+import ru.it.rpgu.web.statisticalreport.table.strategies.StatusValue;
 
 import com.vaadin.ui.Component;
 

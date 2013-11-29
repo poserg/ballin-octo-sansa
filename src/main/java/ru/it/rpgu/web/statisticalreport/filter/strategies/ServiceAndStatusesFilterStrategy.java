@@ -1,13 +1,18 @@
 package ru.it.rpgu.web.statisticalreport.filter.strategies;
 
-import ru.it.rpgu.web.statisticalreport.filter.FilterState;
+import java.util.List;
+
+import ru.it.rpgu.core.dao.StatisticalReportDAO;
+import ru.it.rpgu.core.model.statisticalreport.Report;
+import ru.it.rpgu.core.model.statisticalreport.ReportFilterStateModel;
 import ru.it.rpgu.web.statisticalreport.filter.FilterController.IFilterView;
+import ru.it.rpgu.web.statisticalreport.filter.FilterState;
 
 /**
  * @author Sergey Popov
  *
  */
-public class ServiceAndStatusesFilterStrategy implements IFilterStrategy {
+class ServiceAndStatusesFilterStrategy implements IFilterStrategy {
 
 	/* (non-Javadoc)
 	 * @see ru.it.rpgu.web.view.IFilterStrategy#buildFilterLayout(ru.it.rpgu.web.view.FilterController.IFilterView)
@@ -29,5 +34,10 @@ public class ServiceAndStatusesFilterStrategy implements IFilterStrategy {
 		filterState.setServiceCategory(view.getServiceCategory());
 		filterState.setLifeSituation(view.getLifeSituation());
 		return filterState;
+	}
+
+	@Override
+	public List<Report> getReport(ReportFilterStateModel searchParam) {
+		return StatisticalReportDAO.getServiceByStatusesReport(searchParam);
 	}
 }

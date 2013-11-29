@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import ru.it.rpgu.web.statisticalreport.filter.StatusValue;
+import ru.it.rpgu.web.statisticalreport.table.strategies.StatusValue;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;

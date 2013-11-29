@@ -3,6 +3,9 @@ package ru.it.rpgu.web.statisticalreport.filter;
 import java.util.Date;
 import java.util.Set;
 
+import ru.it.rpgu.core.model.statisticalreport.ReportFilterStateModel;
+import ru.it.rpgu.web.statisticalreport.table.strategies.StatusValue;
+
 /**
  * @author Sergey Popov
  *
@@ -121,5 +124,21 @@ public class FilterState {
 	 */
 	public void setLifeSituation(Boolean lifeSituation) {
 		this.lifeSituation = lifeSituation;
+	}
+	
+	public static ReportFilterStateModel toSearchParam(FilterState filterState) {
+		ReportFilterStateModel searchParam = new ReportFilterStateModel();
+		
+		searchParam.setFromDate(filterState.getFromDate());
+		searchParam.setToDate(filterState.getToDate());
+		
+		for (StatusValue statusValue : filterState.getCheckedStatuses()) {
+			statusValue.getStrategy().setCheck(searchParam);
+		}
+		
+		searchParam.setServiceCategory(filterState.getServiceCategory());
+		searchParam.setLifeSituation(filterState.getLifeSituation());
+		
+		return searchParam;
 	}
 }

@@ -13,6 +13,7 @@ import com.vaadin.ui.Panel;
  */
 class DateIntervalView extends Panel {
 
+	private static final String DATE_FORMAT = "dd.MM.yyyy";
 	/**
 	 * 
 	 */
@@ -29,9 +30,13 @@ class DateIntervalView extends Panel {
 	private HorizontalLayout buildMainLayout() {
 		HorizontalLayout mainLayout = new HorizontalLayout();
 		fromDate = new DateField("С");
+		fromDate.setDateFormat(DATE_FORMAT);
+		//fromDate.setLenient(true);
 		mainLayout.addComponent(fromDate);
 
 		toDate = new DateField("по");
+		toDate.setDateFormat(DATE_FORMAT);
+		toDate.setLenient(true);
 		mainLayout.addComponent(toDate);
 		
 		return mainLayout;

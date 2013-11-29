@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.Set;
 
 import ru.it.rpgu.web.statisticalreport.filter.strategies.IFilterStrategy;
+import ru.it.rpgu.web.statisticalreport.filter.strategies.ReportTypeEnum;
+import ru.it.rpgu.web.statisticalreport.table.strategies.StatusValue;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -138,10 +140,7 @@ public class FilterController {
 		return view.getMainLayout();
 	}
 
-	/**
-	 * @return
-	 */
-	private IFilterStrategy getCurrentFilterStrategy() {
+	public IFilterStrategy getCurrentFilterStrategy() {
 		IFilterStrategy strategy = view.getCurrentReportType().getStrategy();
 		return strategy;
 	}
