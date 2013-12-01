@@ -45,4 +45,8 @@ class TableView {
 	public void addStringColumn(String name) {
 		addColumn(name, String.class);
 	}
+	
+	public void addItem(Object[] cells, Object itemId) {
+		table.addItem(cells, itemId);
+	}
 }

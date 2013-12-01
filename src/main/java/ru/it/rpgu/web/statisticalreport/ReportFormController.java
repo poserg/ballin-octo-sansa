@@ -104,10 +104,10 @@ public class ReportFormController {
 	 * @param report 
 	 */
 	private void setDataTable(FilterState currentFilterState, List<Report> report) {
-		tableController.setColumns(
+		tableController.setData(
 				currentFilterState.getCheckedStatuses(),
 				currentFilterState.getServiceCategory(),
-				currentFilterState.getLifeSituation());
+				currentFilterState.getLifeSituation(), report);
 	}
 
 	private boolean validateDates(Date fromDate, Date toDate) {
