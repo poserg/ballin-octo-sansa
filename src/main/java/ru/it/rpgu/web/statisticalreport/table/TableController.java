@@ -1,6 +1,7 @@
 package ru.it.rpgu.web.statisticalreport.table;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -39,79 +40,90 @@ public class TableController {
 	 */
 	public void setData(Set<StatusValue> checkedStatuses,
 			Boolean serviceCategory, Boolean lifeSituation, List<Report> dataList) {
-		setColumns(checkedStatuses, serviceCategory, lifeSituation);
+		 // setColumns(checkedStatuses, serviceCategory, lifeSituation);
+		int rowSize = dataList.size();
+		Integer[] totalCol = new Integer[rowSize];
+		for (int i = 0; i < rowSize; i++)
+			totalCol[i] = 0;
 		
+		boolean isExistStates = rowSize > 0 && dataList.get(0).getApplicationStates() != null;
+
+		setColumns(isExistStates ? dataList.get(0).getApplicationStates() : new ArrayList<ApplicationState>(), serviceCategory, lifeSituation);
 		
 		{
-			int rowSize = dataList.size();
-			Integer[] totalCol = new Integer[rowSize];
-			
-			boolean isExistStates = rowSize > 0 && dataList.get(0).getApplicationStates() != null;
 			int colSize = 0;
 			if (isExistStates)
 				colSize = dataList.get(0).getApplicationStates().size();
-			// Учитываем столбец Всего
-			colSize++;
 
 			Integer[] totalRow;
 			totalRow = new Integer[colSize];
+			for (int i = 0; i < colSize; i++)
+				totalRow[i] = 0;
 
-			for (int i = 0; i < dataList.size(); i++) {
-				Report report = dataList.get(i);
-				for (int j = 0; j < report.getApplicationStates().size(); j++) {
-					Integer stateCount = report.getApplicationStates().get(0)
-							.getApplicationCount();
-					totalCol[i] += stateCount;
+			if (isExistStates) {
+				Integer total = 0;
 
-					if (isExistStates)
-						totalRow[j + 1] += stateCount;
-				}
+				for (int i = 0; i < rowSize; i++) {
+					Report report = dataList.get(i);
 
-				totalRow[0] += totalCol[i];
-			}
-		}
-		
-		
-		int rowCount = checkedStatuses != null ? checkedStatuses.size() : 0;
-		// Добавляются два столбца для Названия и Всего
-		rowCount += 2;
-		
-		Object[] totalRow = new Object[rowCount];
-		
-		for (Report report : dataList) {
-			Object[] row = new String[rowCount];
-			
-			// Название
-			row[0] = report.getDepartmentName();
-
-			int curCol = 2;
-			Long total = 0L;
-			for (StatusValue statusValue : checkedStatuses) {
-				String value = statusValue.getValue();
-				Integer count = 0;
-				for (ApplicationState applicationState : report.getApplicationStates()) {
-					if (applicationState.getStateName().equals(value)) {
-						count = applicationState.getApplicationCount();
-						break;
+					for (int j = 0; j < colSize; j++) {
+						Integer stateCount = report.getApplicationStates()
+								.get(j).getApplicationCount();
+						totalCol[i] += stateCount;
+						totalRow[j] += stateCount;
 					}
+
+					total += totalCol[i];
 				}
-				row[curCol] = count;
-				curCol++;
-				total+=count;
+
+				for (int i = 0; i < rowSize; i++) {
+					Report report = dataList.get(i);
+					Object[] row = new Object[colSize + 2];
+					row[0] = report.getName();
+					// System.out.println("name = " + report.getName());
+					row[1] = totalCol[i].toString();
+					// System.out.println("total = " + totalCol[i]);
+					for (int j = 0; j < colSize; j++) {
+						row[j + 2] = report.getApplicationStates().get(j)
+								.getApplicationCount().toString();
+						// System.out.println("applicationCount = " + row[j + 2]);
+					}
+					tableView.addItem(row, i);
+				}
+				
+				List<ApplicationState> applicationStates = dataList.get(0).getApplicationStates();
+				for (int j = 0; j < colSize; j++) {
+					tableView.setFooter(applicationStates.get(j).getStateName(), totalRow[j].toString());
+				}
+				tableView.setFooter("Всего заявок", total.toString());
+			} else {
+				// Без детализации по статусам
+				
+				Integer total = 0;
+				for (int i = 0; i < rowSize; i++) {
+					Report report = dataList.get(i);
+					// System.out.println("reportName = " + report.getName());
+					// System.out.println("applicationCount = " + report.getApplicationCount());
+					Object[] row = new Object[colSize + 2];
+					row[0] = report.getName();
+					row[1] = report.getApplicationCount().toString();
+					
+					tableView.addItem(row, i);
+					
+					total += report.getApplicationCount();
+				}
+				tableView.setFooter("Всего заявок", total.toString());
 			}
-			
-			row[1] = total;
-			
-			tableView.addItem(row, report.getDepartmentId());
 		}
+		
 	}
 
 	/**
-	 * @param checkedStatuses
+	 * @param list
 	 * @param serviceCategory
 	 * @param lifeSituation
 	 */
-	private void setColumns(Set<StatusValue> checkedStatuses,
+	private void setColumns(List<ApplicationState> list,
 			Boolean serviceCategory, Boolean lifeSituation) {
 		tableView.refresh();
 		
@@ -125,9 +137,9 @@ public class TableController {
 		
 		tableView.addStringColumn(TOTAL_APPLICATIONS);
 		
-		if (checkedStatuses != null) {
-			for (StatusValue statusValue : checkedStatuses) {
-				tableView.addStringColumn(statusValue.getValue());
+		if (list != null) {
+			for (ApplicationState statusValue : list) {
+				tableView.addStringColumn(statusValue.getStateName());
 			}
 		}
 	}

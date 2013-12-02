@@ -7,13 +7,13 @@ package ru.it.rpgu.web.statisticalreport.table.strategies;
 public enum StatusValue {
 	ALL("Все", null),
 	SEND_TO_OFFICE("Отправлено в ведомство", new SendToOfficeStrategy()),
-	ERROR_SENDING_TO_OFFICE("Ошибка отправки в ведомство", null),
-	IN_REVIEWING("В процессе рассмотрения", null),
-	REQUIRED_ADDITIONAL_INFO("Требуются дополнительные сведения", null),
-	EXECUTED("Исполнено", null),
-	DENIED("Отказано", null),
-	CANCELLED("Отменено", null),
-	OTHER("Прочие статусы", null);
+	ERROR_SENDING_TO_OFFICE("Ошибка отправки в ведомство", new ErrorSendingtoOfficeStrategy()),
+	IN_REVIEWING("В процессе рассмотрения", new InReviewingStrategy()),
+	REQUIRED_ADDITIONAL_INFO("Требуются дополнительные сведения", new RequiredAdditionalInfoStrategy()),
+	EXECUTED("Исполнено", new ExecutedStrategy()),
+	DENIED("Отказано", new DeniedStrategy()),
+	CANCELLED("Отменено", new CancelledStrategy()),
+	OTHER("Прочие статусы", new OtherStrategy());
 	
 	private final String value;
 	private final ITableColStrategy strategy;

@@ -128,13 +128,14 @@ public class FilterState {
 	
 	public static ReportFilterStateModel toSearchParam(FilterState filterState) {
 		ReportFilterStateModel searchParam = new ReportFilterStateModel();
-		
 		searchParam.setFromDate(filterState.getFromDate());
 		searchParam.setToDate(filterState.getToDate());
-		
-		for (StatusValue statusValue : filterState.getCheckedStatuses()) {
-			statusValue.getStrategy().setCheck(searchParam);
-		}
+
+                if (filterState.getCheckedStatuses() != null) {		
+        		for (StatusValue statusValue : filterState.getCheckedStatuses()) {
+	        		statusValue.getStrategy().setCheck(searchParam);
+	        	}
+	        }
 		
 		searchParam.setServiceCategory(filterState.getServiceCategory());
 		searchParam.setLifeSituation(filterState.getLifeSituation());

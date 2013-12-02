@@ -71,16 +71,24 @@ public class ReportFormController {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
+				// System.out.println("started button click");
+
 				FilterState currentFilterState = filterController
 						.getCurrentFilterState();
+				
+				// System.out.println("State was getted");
+				// System.out.println("fromDate = " + currentFilterState.getFromDate());
+				// System.out.println("toDate = " + currentFilterState.getToDate());
 
 				if (validateDates(currentFilterState.getFromDate(),
 						currentFilterState.getToDate())) {
 
 					ReportFilterStateModel searchParam = FilterState.toSearchParam(currentFilterState);
 					
+					// System.out.println("started query");
 					List<Report> report = filterController.getCurrentFilterStrategy().getReport(searchParam);
-					
+					// System.out.println("size report = " + report != null ? report.size() : "null");
+					// System.out.println("set datatable");
 					setDataTable(currentFilterState, report);
 				}
 			}

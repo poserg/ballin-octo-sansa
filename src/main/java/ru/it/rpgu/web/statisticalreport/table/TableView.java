@@ -1,6 +1,7 @@
 package ru.it.rpgu.web.statisticalreport.table;
 
 import com.vaadin.ui.Component;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
 
 /**
@@ -11,33 +12,27 @@ class TableView {
 
 	private static final String OFFICE_NAME = "Наименование ведомства";
 	private static final String TOTAL = "Итого";
-	final Table table;
+	private final HorizontalLayout mainLayout;
+	private Table table;
 	
 	public TableView() {
-		table = new Table();
+	        mainLayout = new HorizontalLayout();
 	}
 	
 	public Component getView() {
-		return table;
+		return mainLayout;
 	}
 	
 	public void refresh() {
-		removeAllColumns();
+	        mainLayout.removeAllComponents();
+	        table = new Table();
+	        mainLayout.addComponent(table);
 		//table.removeAllItems();
 		table.addContainerProperty(OFFICE_NAME, String.class, null);
 		table.setFooterVisible(true);
 		table.setColumnFooter(OFFICE_NAME, TOTAL);
 	}
 
-	/**
-	 * 
-	 */
-	private void removeAllColumns() {
-		for (Object col : table.getContainerPropertyIds().toArray()) {
-			table.removeContainerProperty(col);
-		}
-	}
-	
 	public void addColumn(String name, Class<?> type) {
 		table.addContainerProperty(name, type, null);
 	}
@@ -48,5 +43,9 @@ class TableView {
 	
 	public void addItem(Object[] cells, Object itemId) {
 		table.addItem(cells, itemId);
+	}
+
+	public void setFooter(String string, String string2) {
+		table.setColumnFooter(string, string2);
 	}
 }
