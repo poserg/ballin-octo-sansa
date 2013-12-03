@@ -131,14 +131,28 @@ public class FilterState {
 		searchParam.setFromDate(filterState.getFromDate());
 		searchParam.setToDate(filterState.getToDate());
 
-                if (filterState.getCheckedStatuses() != null) {		
-        		for (StatusValue statusValue : filterState.getCheckedStatuses()) {
-	        		statusValue.getStrategy().setCheck(searchParam);
-	        	}
-	        }
+		if (filterState.getCheckedStatuses() != null) {
+			for (StatusValue statusValue : filterState.getCheckedStatuses()) {
+				statusValue.getStrategy().setCheck(searchParam);
+			}
+		}
 		
 		searchParam.setServiceCategory(filterState.getServiceCategory());
 		searchParam.setLifeSituation(filterState.getLifeSituation());
+		
+		ServiceType serviceType = filterState.getServiceType();
+		if (serviceType != null) {
+        		if (serviceType.equals(ServiceType.ALL)) {
+	        		searchParam.setIsMunicipal(true);
+	        		searchParam.setIsRegional(true);
+	        	} else if (serviceType.equals(ServiceType.MUNICIPAL)) {
+	        		searchParam.setIsMunicipal(true);
+	        		searchParam.setIsRegional(false);
+        		} else if (serviceType.equals(ServiceType.REGIONAL)) {
+        			searchParam.setIsMunicipal(false);
+        			searchParam.setIsRegional(true);
+        		}
+        	}
 		
 		return searchParam;
 	}

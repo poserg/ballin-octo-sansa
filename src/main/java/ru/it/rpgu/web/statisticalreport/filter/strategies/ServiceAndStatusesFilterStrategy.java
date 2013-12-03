@@ -7,6 +7,7 @@ import ru.it.rpgu.core.model.statisticalreport.Report;
 import ru.it.rpgu.core.model.statisticalreport.ReportFilterStateModel;
 import ru.it.rpgu.web.statisticalreport.filter.FilterController.IFilterView;
 import ru.it.rpgu.web.statisticalreport.filter.FilterState;
+import ru.it.rpgu.web.statisticalreport.table.TableController;
 
 /**
  * @author Sergey Popov
@@ -37,7 +38,23 @@ class ServiceAndStatusesFilterStrategy implements IFilterStrategy {
 	}
 
 	@Override
-	public List<Report> getReport(ReportFilterStateModel searchParam) {
-		return StatisticalReportDAO.getServiceByStatusesReport(searchParam);
+	public void getReport(ReportFilterStateModel searchParam,
+			FilterState currentFilterState, TableController tableController) {
+		Boolean isMunicipal = searchParam.getIsMunicipal();
+		Boolean isRegional = searchParam.getIsRegional();
+		
+		if (isMunicipal) {
+			searchParam.setIsMunicipal(true);
+			searchParam.setIsRegional(false);
+			List<Report> reportList = StatisticalReportDAO.getServiceByStatusesReport(searchParam);
+			tableController.setData(currentFilterState.getCheckedStatuses(), currentFilterState.getServiceCategory(), currentFilterState.getLifeSituation(), reportList, isMunicipal, false);
+		}
+		
+		if (isRegional) {
+			searchParam.setIsMunicipal(false);
+			searchParam.setIsRegional(true);
+			List<Report> reportList = StatisticalReportDAO.getServiceByStatusesReport(searchParam);
+			tableController.setData(currentFilterState.getCheckedStatuses(), currentFilterState.getServiceCategory(), currentFilterState.getLifeSituation(), reportList, false, isRegional);
+		}
 	}
 }

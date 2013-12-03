@@ -86,10 +86,10 @@ public class ReportFormController {
 					ReportFilterStateModel searchParam = FilterState.toSearchParam(currentFilterState);
 					
 					// System.out.println("started query");
-					List<Report> report = filterController.getCurrentFilterStrategy().getReport(searchParam);
+					filterController.getCurrentFilterStrategy().getReport(searchParam, currentFilterState, tableController);
 					// System.out.println("size report = " + report != null ? report.size() : "null");
 					// System.out.println("set datatable");
-					setDataTable(currentFilterState, report);
+					// setDataTable(currentFilterState, report);
 				}
 			}
 
@@ -112,31 +112,28 @@ public class ReportFormController {
 	 * @param report 
 	 */
 	private void setDataTable(FilterState currentFilterState, List<Report> report) {
-		tableController.setData(
-				currentFilterState.getCheckedStatuses(),
-				currentFilterState.getServiceCategory(),
-				currentFilterState.getLifeSituation(), report);
+		//tableController.setData(
+		//		currentFilterState.getCheckedStatuses(),
+		//		currentFilterState.getServiceCategory(),
+		//		currentFilterState.getLifeSituation(), report);
 	}
 
 	private boolean validateDates(Date fromDate, Date toDate) {
-		if (fromDate == null || toDate == null) {
-			return false;
-		}
 		StringBuilder message = new StringBuilder();
 		boolean isError = false;
 		Date today = new Date();
 
-		if (fromDate.after(today)) {
+		if (fromDate != null && fromDate.after(today)) {
 			message.append("<br/>Дата начала ещё не наступила.");
 			isError = true;
 		}
 
-		if (toDate.after(today)) {
+		if (toDate != null && toDate.after(today)) {
 			message.append("<br/>Дата завершения ещё не наступила.");
 			isError = true;
 		}
 
-		if (fromDate.after(toDate)) {
+		if (fromDate != null && toDate != null && fromDate.after(toDate)) {
 			message.append("<br/>Дата начала позже даты завершения.");
 			isError = true;
 		}

@@ -41,8 +41,8 @@ class TableView {
 		addColumn(name, String.class);
 	}
 	
-	public void addItem(Object[] cells, Object itemId) {
-		table.addItem(cells, itemId);
+	public void addItem(Object[] cells) {
+		table.addItem(cells, null);
 	}
 
 	public void setFooter(String string, String string2) {
