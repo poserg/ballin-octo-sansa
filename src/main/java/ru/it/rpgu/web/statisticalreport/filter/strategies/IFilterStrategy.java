@@ -3,7 +3,7 @@ package ru.it.rpgu.web.statisticalreport.filter.strategies;
 import ru.it.rpgu.core.model.statisticalreport.ReportFilterStateModel;
 import ru.it.rpgu.web.statisticalreport.filter.FilterController.IFilterView;
 import ru.it.rpgu.web.statisticalreport.filter.FilterState;
-import ru.it.rpgu.web.statisticalreport.table.TableController;
+import ru.it.rpgu.web.statisticalreport.table.ITableController;
 
 
 /**
@@ -31,5 +31,5 @@ public interface IFilterStrategy {
 	 * @param currentFilterState 
 	 * @param tableController
 	 */
-	void getReport(ReportFilterStateModel searchParam, FilterState currentFilterState, TableController tableController);
+	void getReport(ReportFilterStateModel searchParam, FilterState currentFilterState, ITableController tableController);
 }

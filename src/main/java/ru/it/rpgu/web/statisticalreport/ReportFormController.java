@@ -1,5 +1,8 @@
 package ru.it.rpgu.web.statisticalreport;
 
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
@@ -8,7 +11,9 @@ import ru.it.rpgu.core.model.statisticalreport.ReportFilterStateModel;
 import ru.it.rpgu.web.statisticalreport.filter.FilterController;
 import ru.it.rpgu.web.statisticalreport.filter.FilterState;
 import ru.it.rpgu.web.statisticalreport.table.TableController;
+import ru.it.rpgu.web.statisticalreport.table.XlsController;
 
+import com.vaadin.server.StreamResource;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
@@ -57,7 +62,27 @@ public class ReportFormController {
 		filterController = new FilterController();
 		tableController = new TableController();
 		
-		view = new ReportForm();
+		view = new ReportForm(new StreamResource.StreamSource() {
+			
+			@Override
+			public InputStream getStream() {
+				FilterState currentFilterState = filterController
+						.getCurrentFilterState();
+
+				if (validateDates(currentFilterState.getFromDate(),
+						currentFilterState.getToDate())) {
+
+					ReportFilterStateModel searchParam = FilterState.toSearchParam(currentFilterState);
+					
+					XlsController xlsController = new XlsController();
+					filterController.getCurrentFilterStrategy().getReport(searchParam, currentFilterState, xlsController);
+					
+					return new ByteArrayInputStream(xlsController.getFile());
+				}
+
+				return null;
+			}
+		});
 		view.setFilterView(filterController.getView());
 		view.setTableView(tableController.getView());
 		

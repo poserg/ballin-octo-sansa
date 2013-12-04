@@ -7,7 +7,7 @@ import ru.it.rpgu.core.model.statisticalreport.Report;
 import ru.it.rpgu.core.model.statisticalreport.ReportFilterStateModel;
 import ru.it.rpgu.web.statisticalreport.filter.FilterController.IFilterView;
 import ru.it.rpgu.web.statisticalreport.filter.FilterState;
-import ru.it.rpgu.web.statisticalreport.table.TableController;
+import ru.it.rpgu.web.statisticalreport.table.ITableController;
 
 /**
  * @author Sergey Popov
@@ -39,7 +39,7 @@ class ServiceAndStatusesFilterStrategy implements IFilterStrategy {
 
 	@Override
 	public void getReport(ReportFilterStateModel searchParam,
-			FilterState currentFilterState, TableController tableController) {
+			FilterState currentFilterState, ITableController tableController) {
 		Boolean isMunicipal = searchParam.getIsMunicipal();
 		Boolean isRegional = searchParam.getIsRegional();
 		

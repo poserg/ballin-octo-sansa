@@ -2,6 +2,8 @@ package ru.it.rpgu.web.statisticalreport;
 
 import ru.it.rpgu.web.statisticalreport.ReportFormController.IReportForm;
 
+import com.vaadin.server.FileDownloader;
+import com.vaadin.server.StreamResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
@@ -27,8 +29,11 @@ class ReportForm extends CustomComponent implements IReportForm {
 
 	Button formButton, topExportToExcellButton, bottomExportToExcellButton;
 	HorizontalLayout filterLayout, tableLayout;
+	
+	private final StreamResource.StreamSource source;
 
-	public ReportForm() {
+	public ReportForm(StreamResource.StreamSource source) {
+		this.source = source;
 		VerticalLayout mainLayout = buildMainLayout();
 		setCompositionRoot(mainLayout);
 	}
@@ -50,6 +55,10 @@ class ReportForm extends CustomComponent implements IReportForm {
 		bottomExportToExcellButton = new Button(EXPORT_TO_EXCEL);
 		
 		mainLayout.addComponents(header, filterLayout, buttonLayout, tableLayout, bottomExportToExcellButton);
+		
+		FileDownloader fileDownloader = new FileDownloader(getExcelStream());
+		// fileDownloader.extend(bottomExportToExcellButton);
+		fileDownloader.extend(topExportToExcellButton);
 		
 		return mainLayout;
 	}
@@ -86,5 +95,10 @@ class ReportForm extends CustomComponent implements IReportForm {
 	public void setViewToLayout(Layout layout, Component view) {
 		layout.removeAllComponents();
 		layout.addComponent(view);
+	}
+
+	private StreamResource getExcelStream() {
+		StreamResource resource = new StreamResource ( source, "report.xls");
+		return resource;
 	}
 }
