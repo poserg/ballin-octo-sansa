@@ -1,4 +1,4 @@
-package ru.it.rpgu.web.statisticalreport.table.strategies;
+package ru.it.rpgu.web.statisticalreport.filter.statuses;
 
 /**
  * @author Sergey Popov (sergey_popov@relex.ru)

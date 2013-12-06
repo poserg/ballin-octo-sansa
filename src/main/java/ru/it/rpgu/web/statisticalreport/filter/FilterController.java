@@ -3,9 +3,9 @@ package ru.it.rpgu.web.statisticalreport.filter;
 import java.util.Date;
 import java.util.Set;
 
+import ru.it.rpgu.web.statisticalreport.filter.statuses.StatusValue;
 import ru.it.rpgu.web.statisticalreport.filter.strategies.IFilterStrategy;
 import ru.it.rpgu.web.statisticalreport.filter.strategies.ReportTypeEnum;
-import ru.it.rpgu.web.statisticalreport.table.strategies.StatusValue;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;

@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.Set;
 
 import ru.it.rpgu.core.model.statisticalreport.ReportFilterStateModel;
-import ru.it.rpgu.web.statisticalreport.table.strategies.StatusValue;
+import ru.it.rpgu.web.statisticalreport.filter.statuses.StatusValue;
 
 /**
  * @author Sergey Popov

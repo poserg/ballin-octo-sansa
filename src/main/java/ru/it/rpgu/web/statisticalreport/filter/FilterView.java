@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Set;
 
 import ru.it.rpgu.web.statisticalreport.filter.FilterController.IFilterView;
+import ru.it.rpgu.web.statisticalreport.filter.statuses.StatusValue;
 import ru.it.rpgu.web.statisticalreport.filter.strategies.ReportTypeEnum;
 import ru.it.rpgu.web.statisticalreport.filter.view.AddParameterWidget;
 import ru.it.rpgu.web.statisticalreport.filter.view.DateIntervalWidget;
 import ru.it.rpgu.web.statisticalreport.filter.view.DetailStatusPanel;
 import ru.it.rpgu.web.statisticalreport.filter.view.ServiceTypeWidget;
-import ru.it.rpgu.web.statisticalreport.table.strategies.StatusValue;
 
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.Component;

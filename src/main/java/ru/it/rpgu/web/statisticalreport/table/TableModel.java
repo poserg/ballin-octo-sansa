@@ -49,38 +49,37 @@ public class TableModel implements ITableModel {
 	private List<Integer> calcTotalRow(List<Report> reportList) {
 		int size = 0;
 		List<Integer> result;
-		if (reportList.size() > 0) {
+		if (reportList.size() > 0 && reportList.get(0).getApplicationStates() != null && reportList.get(0).getApplicationStates().size() > 0) {
 			List<ApplicationState> applicationStates = reportList.get(0).getApplicationStates();
-			if (applicationStates != null)
-				size = applicationStates.size();
+			size = applicationStates.size();
 			result = new ArrayList<Integer>(size);
 			initArray(result);
-			countTotalRow();
+			countTotalRow(result);
 		} else
 			result = new ArrayList<Integer>(0);
 		
 		return result;
 	}
 
-	private void initArray(List<Integer> arr) {
+	public static void initArray(List<Integer> arr) {
 		for (int i = 0; i < arr.size(); i++) {
-			arr.set(i, 0);
+			arr.add(0);
 		}
 	}
 
-	private void countTotalRow() {
-		for (Report report : reportList) {
-			for (int i = 0; i < totalRow.size(); i++) {
+	private void countTotalRow(List<Integer> result) {
+		for (Report report : getReportList()) {
+			for (int i = 0; i < report.getApplicationStates().size(); i++) {
 				// Нужно чтобы статусы приходили в одинаковом порядке!
 				ApplicationState state = report.getApplicationStates().get(i);
-				totalRow.set(i, totalRow.get(i) + state.getApplicationCount());
+                                result.set(i, result.get(i) + state.getApplicationCount());
 			}
 		}
 	}
 
 	private void countTotalBytStatuses(List<Integer> totalCountByStatuses) {
-		for (int i = 0; i < reportList.size(); i++) {
-			Report report = reportList.get(i);
+		for (int i = 0; i < getReportList().size(); i++) {
+			Report report = getReportList().get(i);
 			Integer total = 0;
 			if (report.getApplicationStates() != null && report.getApplicationStates().size() > 0) {
 				for (ApplicationState state : report.getApplicationStates()) {
@@ -90,7 +89,7 @@ public class TableModel implements ITableModel {
 				total = report.getApplicationCount();
 			}
 			
-			totalCountByStatuses.set(i, total);
+			totalCountByStatuses.add(total);
 		}
 	}
 
@@ -99,7 +98,7 @@ public class TableModel implements ITableModel {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 	// Установка заголовка для подтаблицы
 	public void setTitle() {
 		// TODO Auto-generated method stub
@@ -110,5 +109,40 @@ public class TableModel implements ITableModel {
 	public void setFooter() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	/**
+	 * @return the totalRow
+	 */
+	public List<Integer> getTotalRow() {
+		return totalRow;
+	}
+	
+	public List<String> getStringTotalRow() {
+		List<String> result = new ArrayList<String>();
+		for (Integer integer : totalRow)
+			result.add(integer.toString());
+		return result;
+	}
+
+	/**
+	 * @return the allTotal
+	 */
+	public Integer getAllTotal() {
+		return allTotal;
+	}
+
+	/**
+	 * @return the totalCountByStatuses
+	 */
+	public List<Integer> getTotalCountByStatuses() {
+		return totalCountByStatuses;
+	}
+
+	/**
+	 * @return the reportList
+	 */
+	public List<Report> getReportList() {
+		return reportList;
 	}
 }

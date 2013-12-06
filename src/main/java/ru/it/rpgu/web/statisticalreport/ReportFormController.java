@@ -75,7 +75,7 @@ public class ReportFormController {
 					ReportFilterStateModel searchParam = FilterState.toSearchParam(currentFilterState);
 					
 					XlsController xlsController = new XlsController();
-					filterController.getCurrentFilterStrategy().getReport(searchParam, currentFilterState, xlsController);
+					// filterController.getCurrentFilterStrategy().getReport(searchParam, currentFilterState, xlsController);
 					
 					return new ByteArrayInputStream(xlsController.getFile());
 				}
@@ -149,17 +149,17 @@ public class ReportFormController {
 		Date today = new Date();
 
 		if (fromDate != null && fromDate.after(today)) {
-			message.append("<br/>Дата начала ещё не наступила.");
+			message.append("\nДата начала ещё не наступила.");
 			isError = true;
 		}
 
 		if (toDate != null && toDate.after(today)) {
-			message.append("<br/>Дата завершения ещё не наступила.");
+			message.append("\nДата завершения ещё не наступила.");
 			isError = true;
 		}
 
 		if (fromDate != null && toDate != null && fromDate.after(toDate)) {
-			message.append("<br/>Дата начала позже даты завершения.");
+			message.append("\nДата начала позже даты завершения.");
 			isError = true;
 		}
 

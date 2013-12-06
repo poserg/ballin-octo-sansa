@@ -13,7 +13,7 @@ import ru.it.rpgu.web.statisticalreport.table.ITableController;
  * @author Sergey Popov
  *
  */
-class OfficeAndStatusesFilterStrategy implements IFilterStrategy {
+class OfficeAndStatusesFilterStrategy extends AbstractOfficeStrategy implements IFilterStrategy {
 
 	/* (non-Javadoc)
 	 * @see ru.it.rpgu.web.view.IFilterStrategy#buildFilterLayout(ru.it.rpgu.web.view.FilterController.IFilterView)
@@ -36,6 +36,6 @@ class OfficeAndStatusesFilterStrategy implements IFilterStrategy {
 	@Override
 	public void getReport(ReportFilterStateModel searchParam, FilterState filterState, ITableController tableController) {
 		List<Report> reportList = StatisticalReportDAO.getDepartmentByStatusesReport(searchParam);
-		tableController.setData(filterState.getCheckedStatuses(), filterState.getServiceCategory(), filterState.getLifeSituation(), reportList, false, false);
+		createTableModel(tableController, reportList);
 	}
 }

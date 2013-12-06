@@ -16,14 +16,14 @@ import org.apache.poi.ss.usermodel.Workbook;
 
 import ru.it.rpgu.core.model.statisticalreport.ApplicationState;
 import ru.it.rpgu.core.model.statisticalreport.Report;
-import ru.it.rpgu.web.statisticalreport.table.strategies.StatusValue;
+import ru.it.rpgu.web.statisticalreport.filter.statuses.StatusValue;
 
 /**
  * @author Sergey Popov
  *
  */
 //:TODO Переписать всё!
-public class XlsController implements ITableController{
+public class XlsController {//implements ITableController{
 
 	private static final String TOTAL_APPLICATIONS = "Всего заявок";
 	private static final String LIFE_SITUATION = "Жизненная ситуация";
@@ -68,7 +68,6 @@ public class XlsController implements ITableController{
 
 	}
 
-	@Override
 	public void setData(Set<StatusValue> checkedStatuses,
 			Boolean serviceCategory, Boolean lifeSituation, List<Report> dataList, Boolean isMunicipal, Boolean isRegional) {
 		 // setColumns(checkedStatuses, serviceCategory, lifeSituation);
