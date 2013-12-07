@@ -3,16 +3,19 @@ package ru.it.rpgu.web.statisticalreport.filter.view;
 import java.util.Date;
 
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.DateField;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Panel;
+import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.VerticalLayout;
 
 /**
- * @author Sergey Popov (sergey_popov@relex.ru)
+ * @author Sergey Popov
  *
  */
-class DateIntervalView extends Panel {
+class DateIntervalView extends VerticalLayout {
 
+	private static final String END_DATE = "Дата завершнеия интервала";
+	private static final String START_DATE = "Дата начала интервала";
 	private static final String DATE_FORMAT = "dd.MM.yyyy";
 	/**
 	 * 
@@ -23,20 +26,23 @@ class DateIntervalView extends Panel {
 
 	public DateIntervalView() {
 		super();
-		HorizontalLayout buildMainLayout = buildMainLayout();
-		setContent(buildMainLayout);
+		Component buildMainLayout = buildMainLayout();
+		addComponent(buildMainLayout);
 	}
 
-	private HorizontalLayout buildMainLayout() {
-		HorizontalLayout mainLayout = new HorizontalLayout();
+	private Component buildMainLayout() {
+		// HorizontalLayout mainLayout = new HorizontalLayout();
+		FormLayout mainLayout = new FormLayout();
 		fromDate = new DateField("С");
 		fromDate.setDateFormat(DATE_FORMAT);
+		fromDate.setSizeFull();
+		fromDate.setDescription(START_DATE);
 		//fromDate.setLenient(true);
 		mainLayout.addComponent(fromDate);
 
 		toDate = new DateField("по");
 		toDate.setDateFormat(DATE_FORMAT);
-		toDate.setLenient(true);
+		toDate.setDescription(END_DATE);
 		mainLayout.addComponent(toDate);
 		
 		return mainLayout;

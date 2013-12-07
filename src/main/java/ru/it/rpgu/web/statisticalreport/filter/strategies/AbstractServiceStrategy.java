@@ -35,10 +35,14 @@ abstract class AbstractServiceStrategy {
 					tableModel.addModel(reportList, ReportConstants.REGIONAL_SERVICE, ReportConstants.TOTAL_REGIONAL);
 				}
 			
-				if (searchParam.isLifeSituation())
+				Boolean lifeSituation = searchParam.isLifeSituation();
+				if (lifeSituation != null && lifeSituation)
 					tableModel.setLifeSituation();
-				if (searchParam.isServiceCategory())
+				
+				Boolean serviceCategory = searchParam.isServiceCategory();
+				if (serviceCategory != null && serviceCategory)
 					tableModel.setCategory();
+				
 				tableController.setData(tableModel);
 			}
 

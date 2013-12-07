@@ -17,6 +17,7 @@ import com.vaadin.ui.Component;
  */
 public class TableController implements ITableController {
 	
+	private static final int TITLE_COLUMN_WIDTH = 250;
 	private final TableView tableView;
 	private TableModelAgregator tableModel;
 	
@@ -128,7 +129,7 @@ public class TableController implements ITableController {
 			Boolean serviceCategory, Boolean lifeSituation) {
 		tableView.refresh();
 
-		tableView.addColumn(mainColumnTitle);
+		tableView.addColumn(mainColumnTitle, TITLE_COLUMN_WIDTH);
 		
 		if (serviceCategory != null && serviceCategory) {
 			tableView.addColumn(ReportConstants.CATEGORY_OF_SERVICE);

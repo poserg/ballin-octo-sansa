@@ -39,7 +39,8 @@ public class DetailStatusPanel extends VerticalLayout {
 
 	public DetailStatusPanel() {
 		super();
-
+		setMargin(true);
+		
 		addComponent(new Label(DETAIL_BY_STATUS));
 		
 		// Все

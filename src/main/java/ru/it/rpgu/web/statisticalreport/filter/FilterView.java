@@ -45,6 +45,8 @@ class FilterView extends VerticalLayout implements IFilterView {
 	public FilterView() {
 		super();
 
+		setSizeFull();
+		setMargin(true);
 		addComponent(buildLayout());
 		addComponent(bottomLayout);
 	}

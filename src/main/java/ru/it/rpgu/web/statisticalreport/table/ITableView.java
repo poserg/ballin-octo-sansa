@@ -9,5 +9,7 @@ public interface ITableView {
 	void refresh();
 
 	void addColumn(String columnName);
+	
+	void addColumn(String columnName, int width);
 
 }

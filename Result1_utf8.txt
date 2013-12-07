@@ -1,0 +1,200 @@
+/*2. Отчёт по заявкам в разрезе ведомств с детализацией по статусам
+        Предполагаемые входные параметры:
+                - from_date - строка - дата начала диапазона
+                - to_date - строка - дата завершения диапазона
+		- is_send_to_office - true/false - учитывать заявки со статусом "Отправлено в ведомство"
+		- is_error_sending_to_office - true/false - учитывать заявки со статусом "Ошибка отправки в ведомство"
+		- is_in_reviewing - true/false - учитывать заявки со статусом "В процессе рассмотрения"
+		- is_required_additional_info - true/false - учитывать заявки со статусом "Требуются дополнительные сведения"
+		- is_executed - true/false - учитывать заявки со статусом "Исполнено"
+		- is_denied - true/false - учитывать заявки со статусом "Отказано"
+		- is_cancelled - true/false - учитывать заявки со статусом "Отменено"
+		- is_other - true/false - учитывать заявки со всеми остальными статусами
+        
+        Предполагаемые выходные параметры:
+                - department_id - число - идентификатор ведомства
+                - department_name - строка - название ведомства
+                - state_id - число - идентификатор статуса
+                - state_name - строка - название статуса
+                - application_count - число - кол-во заявок в ведомстве с определённом статусом
+                
+        Сортировка по полю department_name. Нужны только те ведомства, по которым есть заявки.
+*/
+
+with tmp as (
+	select pa.agency_office_name as dep_name, p.state_name as st_name,
+		count (p.application_id) as app_count
+	from (
+		select pas.application_id as app_id, max(pas.application_state_history_id) as hist_id
+	    from po_application_state_history pas
+    	group by pas.application_id) a, po_application_state_history p, 
+        	po_application pa
+	where p.application_state_history_id = a.hist_id 
+		and pa.application_id = p.application_id
+<if test="inFromDate != null">         
+	and cast (pa.date_inserted as date) <= #{inFromDate}
+</if>
+<if test="inToDate != null">         
+    and cast (pa.date_inserted as date) >= #{inToDate}
+</if>
+    group by pa.agency_office_name,p.state_name
+    ),
+    tmp1 as (select a.st_name, a.st_code, a1.dep_name, a1.dep_id
+			from
+			(select state_name as st_name, max(status_code) as st_code 
+            	from po_application_state_history group by state_name) a,
+			(select agency_office_name as dep_name, max(department_id) as dep_id 
+            	from po_application group by agency_office_name) a1)
+select t1.dep_id as department_id, t1.dep_name as department_name, t1.st_code as state_id, 
+	t1.st_name as state_name, 
+	case when t.app_count is not null then t.app_count else 0 end as application_count
+from tmp1 t1
+	left outer join tmp t on (t.st_name = t1.st_name and t.dep_name = t1.dep_name)
+where t1.dep_name is not null
+<if test="isSendToOffice = false">
+	and t1.st_name != 'Отправлено в ведомство'
+</if>
+<if test="isErrorSendingToOffice = false">
+	and t1.st_name != 'Ошибка отправки в ведомство'
+</if>
+<if test="isInReviewing = false">
+	and t1.st_name != 'В процессе рассмотрения'
+</if>
+<if test="isRequiredAdditionalInfo = false">
+	and t1.st_name != 'Требуются дополнительные сведения'
+</if>
+<if test="isExecuted = false">
+	and t1.st_name != 'Исполнено'
+</if>
+<if test="isDenied = false">
+	and t1.st_name != 'Отказано'
+</if>
+<if test="isCancelled = false">
+	and t1.st_name != 'Отменено'
+</if>
+<if test="isOther = false">
+	and t1.st_name in ('Отправлено в ведомство','Ошибка отправки в ведомство','В процессе рассмотрения',
+    	'Требуются дополнительные сведения','Исполнено','Отказано','Отменено')
+</if>
+order by t1.dep_name
+
+
+
+/*4. Отчёт по заявкам в разрезе услуг с детализацией по статусам
+        Предполагаемые входные параметры:
+                - from_date - строка - дата начала диапазона
+                - to_date - строка - дата завершения диапазона
+		- is_send_to_office - true/false - учитывать заявки со статусом "Отправлено в ведомство"
+		- is_error_sending_to_office - true/false - учитывать заявки со статусом "Ошибка отправки в ведомство"
+		- is_in_reviewing - true/false - учитывать заявки со статусом "В процессе рассмотрения"
+		- is_required_additional_info - true/false - учитывать заявки со статусом "Требуются дополнительные сведения"
+		- is_executed - true/false - учитывать заявки со статусом "Исполнено"
+		- is_denied - true/false - учитывать заявки со статусом "Отказано"
+		- is_cancelled - true/false - учитывать заявки со статусом "Отменено"
+		- is_other - true/false - учитывать заявки со всеми остальными статусами
+
+		
+		- is_category_need - true/false - нужны категории услуг
+		- is_life_situation_need - true/false - нужны жизненные ситуации услуг
+
+                Возможен один из следующих параметров
+                        - is_all - true/false - поиск по всем услугам
+                        - is_municipal - true/false - поиск только по муниципальным услугам
+                        - is_regional - true/false - поиск только по региональным услугам
+        
+        Предполагаемые выходные параметры:
+                - service_id - число - идентификатор услуги
+                - service_name - строка - название услуги 
+                - state_id - число - идентификатор статуса
+                - state_name - строка - название статуса
+                - application_count - число - кол-во заявок по услуге с определённым статусом
+                
+                Если установлен флаг is_category_need, тогда:
+                        - category - строка - категорию/подкатегорию услуги
+                Если установлен флаг is_life_situation_need, тогда:
+                        - life_situation - жизненная ситуация
+
+        Сортировка по полю service_name. Нужны только те услуги, по которым есть заявления.
+*/
+
+with tmp as (
+	select pa.service_id as serv_id, p.state_name as st_name,
+		count (p.application_id) as app_count
+	from (
+		select pas.application_id as app_id, max(pas.application_state_history_id) as hist_id
+	    from po_application_state_history pas
+    	group by pas.application_id) a, po_application_state_history p, 
+        	po_application pa
+	where p.application_state_history_id = a.hist_id 
+		and pa.application_id = p.application_id
+<if test="inFromDate != null">         
+	and cast (pa.date_inserted as date) <= #{inFromDate}
+</if>
+<if test="inToDate != null">         
+    and cast (pa.date_inserted as date) >= #{inToDate}
+</if>
+   group by pa.service_id,p.state_name),
+    tmp1 as (select a.st_name, a.st_code, a1.serv_id, a1.srv_name, a1.adm_lev
+			from
+			(select state_name as st_name, max(status_code) as st_code 
+            	from po_application_state_history group by state_name) a,
+			(select pa.service_id as serv_id, max(cs.short_name) as srv_name, max(cs.adm_lev_dict_id) as adm_lev
+            	from po_application pa, cat_service cs 
+                where cs.service_id = pa.service_id
+                group by pa.service_id) a1),
+	tmp2 as (select distinct cs.service_id as serv_id, csc.name, lm.lm_name
+    		from cat_service cs 
+    			left outer join cat_service_catalog csc using (service_catalog_id)
+    			left outer join lm_service_vw lm using (service_id))
+
+select t1.serv_id as service_id, t1.srv_name as service_name, 
+	t1.st_code as state_id, t1.st_name as state_name,
+    case when t.app_count is not null then t.app_count else 0 end as application_count
+
+<if test="isCategoryNeed = true">
+	,t2.name as category
+</if>
+<if test="isLifeSituationNeed = true">
+	,t2.lm_name as life_situation
+</if>
+    
+from tmp2 t2, tmp1 t1
+	left outer join tmp t on (t.st_name = t1.st_name and t.serv_id = t1.serv_id)
+where t1.serv_id = t2.serv_id
+
+<if test="isSendToOffice = false">
+	and t1.st_name != 'Отправлено в ведомство'
+</if>
+<if test="isErrorSendingToOffice = false">
+	and t1.st_name != 'Ошибка отправки в ведомство'
+</if>
+<if test="isInReviewing = false">
+	and t1.st_name != 'В процессе рассмотрения'
+</if>
+<if test="isRequiredAdditionalInfo = false">
+	and t1.st_name != 'Требуются дополнительные сведения'
+</if>
+<if test="isExecuted = false">
+	and t1.st_name != 'Исполнено'
+</if>
+<if test="isDenied = false">
+	and t1.st_name != 'Отказано'
+</if>
+<if test="isCancelled = false">
+	and t1.st_name != 'Отменено'
+</if>
+<if test="isOther = false">
+	and t1.st_name in ('Отправлено в ведомство','Ошибка отправки в ведомство','В процессе рассмотрения',
+    	'Требуются дополнительные сведения','Исполнено','Отказано','Отменено')
+</if>
+
+<choose>
+<when test="isMunicipal = true">
+	and t1.adm_lev = (select adm_lev_dict_id from cat_adm_lev_dict where name = 'MUNICIPAL')
+</when>
+<when test="isRegional = true">
+	and t1.adm_lev = (select adm_lev_dict_id from cat_adm_lev_dict where name = 'REGIONAL')
+</when>
+</choose>
+
+order by t1.srv_name;

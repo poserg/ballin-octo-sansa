@@ -8,10 +8,10 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
+import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Panel;
 
 /**
  * @author Sergey Popov (sergey_popov@relex.ru)
@@ -34,16 +34,16 @@ class ReportForm extends CustomComponent implements IReportForm {
 
 	public ReportForm(StreamResource.StreamSource source) {
 		this.source = source;
-		VerticalLayout mainLayout = buildMainLayout();
+		Component mainLayout = buildMainLayout();
 		setCompositionRoot(mainLayout);
 	}
 
-	private VerticalLayout buildMainLayout() {
-		VerticalLayout mainLayout = new VerticalLayout();
-
-		Label header = new Label(REPORTS);
+	private Component buildMainLayout() {
+		FormLayout mainLayout = new FormLayout();
+		Panel panel = new Panel(REPORTS);
 		
 		filterLayout = new HorizontalLayout();
+		panel.setContent(filterLayout);
 		
 		HorizontalLayout buttonLayout = new HorizontalLayout();
 		formButton = new Button(FORM);
@@ -54,7 +54,7 @@ class ReportForm extends CustomComponent implements IReportForm {
 		
 		bottomExportToExcellButton = new Button(EXPORT_TO_EXCEL);
 		
-		mainLayout.addComponents(header, filterLayout, buttonLayout, tableLayout, bottomExportToExcellButton);
+		mainLayout.addComponents(panel, buttonLayout, tableLayout, bottomExportToExcellButton);
 		
 		FileDownloader fileDownloader = new FileDownloader(getExcelStream());
 		// fileDownloader.extend(bottomExportToExcellButton);
