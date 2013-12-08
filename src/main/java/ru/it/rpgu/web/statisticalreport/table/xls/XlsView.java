@@ -98,13 +98,13 @@ public class XlsView implements ITableView {
 
 	@Override
 	public void addColumn(String columnName) {
-		Cell cell = createCell(tableHeader);
-		cell.setCellValue(columnName);
-		cell.setCellStyle(styles.get(XlsStyle.TABLE_HEADER));
+		createCell(columnName, tableHeader, XlsStyle.TABLE_HEADER);
+		sheet.setColumnWidth(tableHeader.getLastCellNum(), 50 * 256);
 		columnNames.add(columnName);
 	}
 
 	private Cell createCell(Row row) {
+		System.out.println("last cell num = " + (row.getLastCellNum() + 1));
 		return row.createCell(row.getLastCellNum() + 1);
 	}
 
@@ -145,23 +145,24 @@ public class XlsView implements ITableView {
 		
 		Row row = createRow();
 		
-		CellStyle style = styles.get((row.getRowNum() - headerRowNum) % 2 == 0 ? XlsStyle.TABEL_CONTENT_ODD : XlsStyle.TABLE_CONTENT_EVEN);
+		String styleName = (row.getRowNum() - headerRowNum) % 2 == 0 ? XlsStyle.TABLE_CONTENT_EVEN : XlsStyle.TABEL_CONTENT_ODD;
 		
 		for (int i = 0; i < cells.length; i++) {
-			createCell(cells[i].toString(), row, style);
+			createCell(cells[i].toString(), row, styleName);
 		}
 	}
 
 	@Override
 	public void addItem(String cell) {
 		Row row = createRow();
-		createCell(cell, row, styles.get(XlsStyle.SUBTITLE_STYLE));
+		tableHeader = row;
+		createCell(cell, row, XlsStyle.SUBTITLE_STYLE);
 	}
 
-	private void createCell(String value, Row row, CellStyle cellStyle) {
+	private void createCell(String value, Row row, String styleName) {
 		Cell createCell = createCell(row);
 		createCell.setCellValue(value);
-		createCell.setCellStyle(cellStyle);
+		createCell.setCellStyle(styles.get(styleName));
 	}
 
 	@Override
