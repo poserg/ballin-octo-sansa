@@ -98,7 +98,7 @@ public class XlsView implements ITableView {
 
 	@Override
 	public void addColumn(String columnName) {
-		addColumn(columnName, 100);
+		addColumn(columnName, columnName.length() * 10);
 	}
 
 	private Cell createCell(Row row) {
@@ -108,7 +108,7 @@ public class XlsView implements ITableView {
 	@Override
 	public void addColumn(String columnName, int width) {
 		createCell(columnName, tableHeader, XlsStyle.TABLE_HEADER);
-		sheet.setColumnWidth(tableHeader.getLastCellNum(), 50 * width);
+		sheet.setColumnWidth(tableHeader.getLastCellNum() - 1, 50 * width);
 		columnNames.add(columnName);
 	}
 	
@@ -170,15 +170,11 @@ public class XlsView implements ITableView {
 		
 		// Итого
 		if (list.size() > 0) {
-			Cell cell = createCell(footer);
-			cell.setCellValue(list.get(0).toString());
-			cell.setCellStyle(styles.get(XlsStyle.TOTAL_TITLE));
+			createCell(list.get(0).toString(), footer, XlsStyle.TOTAL_TITLE);
 		}
 		
 		for (int i = 1; i < list.size(); i++) {
-			Cell cell = createCell(footer);
-			cell.setCellValue(list.get(i).toString());
-			cell.setCellStyle(styles.get(XlsStyle.TOTAL));
+			createCell(list.get(i).toString(), footer, XlsStyle.TOTAL);
 		}
 	}
 }

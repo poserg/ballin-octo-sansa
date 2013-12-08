@@ -82,7 +82,7 @@ class XlsStyle {
 		totalCellStyle.setFont(subtitleFont);
 		totalCellStyle.setAlignment(CellStyle.ALIGN_CENTER);
 		setBorders(totalCellStyle, CellStyle.BORDER_DOUBLE);
-		setBackgroud(totalTitleCellStyle, IndexedColors.GREY_40_PERCENT);
+		setBackgroud(totalCellStyle, IndexedColors.GREY_40_PERCENT);
 		styles.put(TOTAL, totalCellStyle);
 		
 		return styles;
