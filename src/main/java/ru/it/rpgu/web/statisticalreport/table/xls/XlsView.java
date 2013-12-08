@@ -98,19 +98,18 @@ public class XlsView implements ITableView {
 
 	@Override
 	public void addColumn(String columnName) {
-		createCell(columnName, tableHeader, XlsStyle.TABLE_HEADER);
-		sheet.setColumnWidth(tableHeader.getLastCellNum(), 50 * 256);
-		columnNames.add(columnName);
+		addColumn(columnName, 100);
 	}
 
 	private Cell createCell(Row row) {
-		System.out.println("last cell num = " + (row.getLastCellNum() + 1));
-		return row.createCell(row.getLastCellNum() + 1);
+		return row.createCell(row.getLastCellNum() == -1 ? 0 : row.getLastCellNum());
 	}
 
 	@Override
 	public void addColumn(String columnName, int width) {
-		addColumn(columnName);
+		createCell(columnName, tableHeader, XlsStyle.TABLE_HEADER);
+		sheet.setColumnWidth(tableHeader.getLastCellNum(), 50 * width);
+		columnNames.add(columnName);
 	}
 	
 	@Override
