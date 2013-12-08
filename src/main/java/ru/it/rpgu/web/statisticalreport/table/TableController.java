@@ -7,6 +7,7 @@ import java.util.List;
 import ru.it.rpgu.core.model.statisticalreport.ApplicationState;
 import ru.it.rpgu.core.model.statisticalreport.Report;
 import ru.it.rpgu.web.statisticalreport.ReportConstants;
+import ru.it.rpgu.web.statisticalreport.table.xls.XlsView;
 
 import com.vaadin.ui.Component;
 
@@ -33,6 +34,16 @@ public class TableController implements ITableController {
 	public void setData(TableModelAgregator tableModel) {
 		 this.tableModel = tableModel;
 		
+		generateTable(tableModel, tableView);
+	}
+	
+	public byte[] createXlsFile() {
+		XlsView xlsView = new XlsView();
+		generateTable(tableModel, xlsView);
+		return xlsView.getFile();
+	}
+
+	private void generateTable(TableModelAgregator tableModel, ITableView tableView) {
 		setColumns(tableView, tableModel.getMainColumnTitle(), tableModel.getStatusColumns(), tableModel.getCategory(), tableModel.getLifeSituation());
 
 		boolean isManyModels = tableModel.getModels().size() > 1;
@@ -89,7 +100,6 @@ public class TableController implements ITableController {
 					ReportConstants.EMPTY_STRING, tableModel.getAllTotal(), tableModel.getTotalRow());
 			tableView.setFooter(row);
 		}
-		
 	}
 
 	private List<Object> createRow(Boolean isCategory, Boolean isLifeSituation,

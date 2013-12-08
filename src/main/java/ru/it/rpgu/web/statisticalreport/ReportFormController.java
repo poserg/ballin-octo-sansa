@@ -11,7 +11,7 @@ import ru.it.rpgu.core.model.statisticalreport.ReportFilterStateModel;
 import ru.it.rpgu.web.statisticalreport.filter.FilterController;
 import ru.it.rpgu.web.statisticalreport.filter.FilterState;
 import ru.it.rpgu.web.statisticalreport.table.TableController;
-import ru.it.rpgu.web.statisticalreport.table.XlsController;
+import ru.it.rpgu.web.statisticalreport.table.xls.XlsController;
 
 import com.vaadin.server.StreamResource;
 import com.vaadin.ui.Button.ClickEvent;
@@ -73,11 +73,9 @@ public class ReportFormController {
 						currentFilterState.getToDate())) {
 
 					ReportFilterStateModel searchParam = FilterState.toSearchParam(currentFilterState);
-					
-					XlsController xlsController = new XlsController();
-					// filterController.getCurrentFilterStrategy().getReport(searchParam, currentFilterState, xlsController);
-					
-					return new ByteArrayInputStream(xlsController.getFile());
+
+					byte[] xlsFile = tableController.createXlsFile();
+					return new ByteArrayInputStream(xlsFile);
 				}
 
 				return null;

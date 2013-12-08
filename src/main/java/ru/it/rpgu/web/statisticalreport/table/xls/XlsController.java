@@ -1,4 +1,4 @@
-package ru.it.rpgu.web.statisticalreport.table;
+package ru.it.rpgu.web.statisticalreport.table.xls;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

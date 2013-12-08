@@ -56,9 +56,11 @@ class ReportForm extends CustomComponent implements IReportForm {
 		
 		mainLayout.addComponents(panel, buttonLayout, tableLayout, bottomExportToExcellButton);
 		
-		FileDownloader fileDownloader = new FileDownloader(getExcelStream());
-		// fileDownloader.extend(bottomExportToExcellButton);
-		fileDownloader.extend(topExportToExcellButton);
+		FileDownloader fileDownloaderTop = new FileDownloader(getExcelStream());
+		fileDownloaderTop.extend(topExportToExcellButton);
+
+		FileDownloader fileDownloaderBottom = new FileDownloader(getExcelStream());
+		fileDownloaderBottom.extend(bottomExportToExcellButton);
 		
 		return mainLayout;
 	}
