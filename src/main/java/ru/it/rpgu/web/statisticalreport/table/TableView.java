@@ -1,12 +1,14 @@
 package ru.it.rpgu.web.statisticalreport.table;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ru.it.rpgu.web.statisticalreport.ReportConstants;
 
 import com.vaadin.ui.Component;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
+import com.vaadin.ui.TextArea;
+import com.vaadin.ui.VerticalLayout;
 
 /**
  * @author Sergey Popov
@@ -14,12 +16,38 @@ import com.vaadin.ui.Table;
  */
 class TableView implements ITableView {
 
-	private final HorizontalLayout mainLayout;
+	private final VerticalLayout mainLayout;
 	private Table table;
 	private int columnsCount = 0;
+	private List<String> columnNames;
 	
 	public TableView() {
-		mainLayout = new HorizontalLayout();
+		mainLayout = new VerticalLayout();
+		refresh();
+		table.addContainerProperty("title", TextArea.class, null);
+		table.addContainerProperty("total", String.class, null);
+		
+		TextArea title = new TextArea();
+		title.setValue("Очень очень длинная строка с пробелами даже не знаю что с ней можно путного сделать. вот если бы ее ужать");
+		title.setReadOnly(true);
+		title.setWordwrap(true);
+		title.setSizeFull();
+		table.addItem(new Object[]{title, "123"}, null);
+		
+		title = new TextArea();
+		title.setValue("Мы приглашаем к участию в Kotlin Challenge всех, кто любит сложные олимпиадные задач");
+		title.setReadOnly(true);
+		title.setWordwrap(true);
+		title.setSizeFull();
+		table.addItem(new Object[]{title, "123"}, null);
+
+		title = new TextArea();
+		title.setValue("чтобы сыграть роль первопроходцев, покоряющих неизведанный край нового языка, сразиться с серьезными соперниками");
+		title.setReadOnly(true);
+		title.setWordwrap(true);
+		title.setSizeFull();
+		table.addItem(new Object[]{title, "123"}, null);
+
 	}
 	
 	public Component getView() {
@@ -32,17 +60,26 @@ class TableView implements ITableView {
 		table = new Table();
 		mainLayout.addComponent(table);
 		table.setFooterVisible(true);
+		table.setSizeFull();
 		columnsCount = 0;
+		columnNames = new ArrayList<String>();
 	}
 
 	public void addColumn(String name, Class<?> type) {
 		table.addContainerProperty(name, type, null);
 		columnsCount++;
+		columnNames.add(name);
 	}
 
 	@Override
 	public void addColumn(String name) {
-		addColumn(name, String.class);
+		addColumn(name, TextArea.class);
+	}
+	
+	@Override
+	public void addColumn(String columnName, int width) {
+		addColumn(columnName);
+		table.setColumnWidth(columnName, width);
 	}
 	
 	public void addItem(Object[] cells) {
@@ -79,7 +116,17 @@ class TableView implements ITableView {
 	 * @param cells
 	 */
 	private void addItemToTable(Object[] cells) {
-		table.addItem(cells, null);
+		TextArea[] row = new TextArea[cells.length];
+		for (int i = 0; i < cells.length; i++) {
+			TextArea cell = new TextArea();
+			cell.setValue(cells[i].toString());
+			cell.setWordwrap(true);
+			cell.setReadOnly(true);
+			cell.setSizeFull();
+			
+			row[i] = cell;
+		}
+		table.addItem(row, null);
 	}
 
 	public void setFooter(String string, String string2) {
@@ -87,7 +134,8 @@ class TableView implements ITableView {
 	}
 
 	public void setFooter(List<Object> row) {
-		// TODO Auto-generated method stub
-		
+		for (int i = 0; i < row.size(); i++) {
+			setFooter(columnNames.get(i), row.get(i).toString());
+		}
 	}
 }

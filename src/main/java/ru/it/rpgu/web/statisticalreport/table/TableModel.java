@@ -51,9 +51,20 @@ public class TableModel implements ITableModel {
 		List<Integer> result;
 		if (reportList.size() > 0 && reportList.get(0).getApplicationStates() != null && reportList.get(0).getApplicationStates().size() > 0) {
 			List<ApplicationState> applicationStates = reportList.get(0).getApplicationStates();
+			for (Report report : reportList) {
+		                System.out.println("department = " + report.getName());
+			        if (report.getApplicationStates() != null) {
+			                for (ApplicationState state : report.getApplicationStates()) {
+			                        System.out.println("State: " + state.getStateName() + "; count = " + state.getApplicationCount());
+                                        }
+			        }
+			}
 			size = applicationStates.size();
+        		System.out.println("++++++++++++++++++++");
+			System.out.println("size = " + size);
+        		System.out.println("++++++++++++++++++++");
 			result = new ArrayList<Integer>(size);
-			initArray(result);
+			initArray(result, size);
 			countTotalRow(result);
 		} else
 			result = new ArrayList<Integer>(0);
@@ -63,6 +74,12 @@ public class TableModel implements ITableModel {
 
 	public static void initArray(List<Integer> arr) {
 		for (int i = 0; i < arr.size(); i++) {
+			arr.add(0);
+		}
+	}
+
+	public static void initArray(List<Integer> arr, int size) {
+		for (int i = 0; i < size; i++) {
 			arr.add(0);
 		}
 	}

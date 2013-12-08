@@ -44,12 +44,12 @@ public class TableModelAgregator implements ITableModel {
 					&& reportList.get(0).getApplicationStates().size() > 0) {
 				statusColumnNames = new ArrayList<String>(reportList.size());
 				applicationStates = reportList.get(0).getApplicationStates();
+				
+				for (ApplicationState state : applicationStates) {
+				        statusColumnNames.add(state.getStateName());
+				}
 			} else
 				statusColumnNames = new ArrayList<String>(0);
-
-			for (int i = 0; i < statusColumnNames.size(); i++) {
-				statusColumnNames.set(i, applicationStates.get(i).getStateName());
-			}
 		}
 	}
 
@@ -62,7 +62,7 @@ public class TableModelAgregator implements ITableModel {
 		
 		if (totalRow == null) {
 			totalRow = new ArrayList<Integer>(modelTotalRow.size());
-			TableModel.initArray(totalRow);
+			TableModel.initArray(totalRow, modelTotalRow.size());
 		}
 		
 		for (int i = 0; i < modelTotalRow.size(); i++) {
@@ -140,5 +140,9 @@ public class TableModelAgregator implements ITableModel {
 		for (Integer integer : totalRow)
 			result.add(integer.toString());
 		return result;
+	}
+	
+	public Integer getAllTotal() {
+	        return allTotal;
 	}
 }

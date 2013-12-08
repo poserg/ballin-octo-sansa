@@ -74,7 +74,7 @@ public class TableController implements ITableController {
 			
 			List<Object> row = createRow(tableModel.getCategory(),
 					tableModel.getLifeSituation(),
-					modelItem.getTotalName(), table.getStringTotalRow());
+					modelItem.getTotalName(), table.getAllTotal(), table.getStringTotalRow());
 			if (isManyModels)
 				tableView.addItem(row);
 			else 
@@ -86,14 +86,14 @@ public class TableController implements ITableController {
 			List<Object> row;
 			row = createRow(tableModel.getCategory(),
 					tableModel.getLifeSituation(),
-					ReportConstants.EMPTY_STRING, tableModel.getTotalRow());
+					ReportConstants.EMPTY_STRING, tableModel.getAllTotal(), tableModel.getTotalRow());
 			tableView.setFooter(row);
 		}
 		
 	}
 
 	private List<Object> createRow(Boolean isCategory, Boolean isLifeSituation,
-			String title, List<String> rowList) {
+			String title, Integer allTotal, List<String> rowList) {
 		List<Object> row = new ArrayList<Object>();
 		row.add(title);
 
@@ -102,6 +102,8 @@ public class TableController implements ITableController {
 		
 		if (isLifeSituation)
 			row.add(ReportConstants.EMPTY_STRING);
+			
+		row.add(allTotal.toString());
 		
 		row.addAll(rowList);
 		return row;
