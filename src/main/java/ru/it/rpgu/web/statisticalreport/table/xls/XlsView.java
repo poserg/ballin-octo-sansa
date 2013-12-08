@@ -42,8 +42,10 @@ public class XlsView implements ITableView {
 	public void refresh() {
 		columnNames = new ArrayList<String>();
 		
-		int sheetIndex = wb.getSheetIndex(sheet);
-		wb.removeSheetAt(sheetIndex);
+		if (sheet != null) {
+			int sheetIndex = wb.getSheetIndex(sheet);
+			wb.removeSheetAt(sheetIndex);
+		}
 		sheet = wb.createSheet();
 		sheet.setFitToPage(true);
 		sheet.setDisplayGridlines(false);
