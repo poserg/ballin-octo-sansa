@@ -105,7 +105,7 @@ public class XlsView implements ITableView {
 	}
 
 	private Cell createCell(Row row) {
-		return row.createCell(row.getLastCellNum());
+		return row.createCell(row.getLastCellNum() + 1);
 	}
 
 	@Override
