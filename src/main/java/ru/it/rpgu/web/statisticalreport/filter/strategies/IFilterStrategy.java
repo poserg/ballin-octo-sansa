@@ -32,4 +32,16 @@ public interface IFilterStrategy {
 	 * @param tableController
 	 */
 	void getReport(ReportFilterStateModel searchParam, FilterState currentFilterState, ITableController tableController);
+	
+	/**
+	 * Название отчета.
+	 * @return
+	 */
+	String getReportName();
+	
+	/**
+	 * Имя для файла.
+	 * @return
+	 */
+	String getReportFileName();
 }

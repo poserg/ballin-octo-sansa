@@ -12,7 +12,7 @@ import ru.it.rpgu.core.model.statisticalreport.Report;
  */
 public class TableModel implements ITableModel {
 
-	private final List<Report> reportList;
+	private List<Report> reportList;
 	private final List<Integer> totalCountByStatuses;
 	private final List<Integer> totalRow;
 	private final Integer allTotal;
@@ -95,8 +95,7 @@ public class TableModel implements ITableModel {
 	}
 
 	private void countTotalBytStatuses(List<Integer> totalCountByStatuses) {
-		for (int i = 0; i < getReportList().size(); i++) {
-			Report report = getReportList().get(i);
+		for (Report report : reportList) {
 			Integer total = 0;
 			if (report.getApplicationStates() != null && report.getApplicationStates().size() > 0) {
 				for (ApplicationState state : report.getApplicationStates()) {
@@ -104,6 +103,11 @@ public class TableModel implements ITableModel {
 				}
 			} else if (report.getApplicationCount() != null) {
 				total = report.getApplicationCount();
+			}
+			
+			if (total == 0) {
+				// Нет заявок для ведомства/услуги.
+				reportList.remove(report);
 			}
 			
 			totalCountByStatuses.add(total);

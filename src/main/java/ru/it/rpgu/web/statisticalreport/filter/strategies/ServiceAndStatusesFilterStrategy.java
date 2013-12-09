@@ -11,6 +11,8 @@ import ru.it.rpgu.web.statisticalreport.table.ITableController;
  */
 class ServiceAndStatusesFilterStrategy extends AbstractServiceStrategy implements IFilterStrategy {
 
+	private static final String REPORT_FILE_NAME = "Отчет_по_заявкам_в_разрезе_услуг_с_детализацией_по_статусам";
+
 	/* (non-Javadoc)
 	 * @see ru.it.rpgu.web.view.IFilterStrategy#buildFilterLayout(ru.it.rpgu.web.view.FilterController.IFilterView)
 	 */
@@ -39,5 +41,15 @@ class ServiceAndStatusesFilterStrategy extends AbstractServiceStrategy implement
 		Boolean isMunicipal = searchParam.getIsMunicipal();
 		Boolean isRegional = searchParam.getIsRegional();
 		createTableModel(searchParam, tableController, isMunicipal, isRegional);
+	}
+
+	@Override
+	public String getReportName() {
+		return ReportTypeEnum.SERVICE_AND_STATUSES.name();
+	}
+
+	@Override
+	public String getReportFileName() {
+		return REPORT_FILE_NAME;
 	}
 }

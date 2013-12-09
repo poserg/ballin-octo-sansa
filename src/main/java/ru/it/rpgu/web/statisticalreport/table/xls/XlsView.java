@@ -26,15 +26,26 @@ public class XlsView implements ITableView {
 
 	private final Workbook wb;
 	private final Map<String, CellStyle> styles;
+	private final String reportName;
+	private final Date fromDate;
+	private final Date toDate;
 	private Sheet sheet;
-	private Cell dateInterval;
-	private Cell titleCell;
 	private Row tableHeader;
 	private List<String> columnNames;
+	private int captionCount;
 	
-	public XlsView() {
+	public XlsView(String reportName, Date fromDate, Date toDate, boolean isCategory, boolean isLifeSituation) {
+		this.fromDate = fromDate;
+		this.toDate = toDate == null ? new Date() : toDate;
+		
+		captionCount = 1;
+		if (isCategory)
+			captionCount++;
+		if (isLifeSituation)
+			captionCount++;
 		wb = new HSSFWorkbook();
 		styles = XlsStyle.createStyles(wb);
+		this.reportName = reportName;
 		refresh();
 	}
 	
@@ -42,58 +53,62 @@ public class XlsView implements ITableView {
 	public void refresh() {
 		columnNames = new ArrayList<String>();
 		
-		if (sheet != null) {
-			int sheetIndex = wb.getSheetIndex(sheet);
-			wb.removeSheetAt(sheetIndex);
+		initSheet();
+		initTitle();
+        initDateCell();
+		initDateInterval();
+		createRow();
+		tableHeader = createRow();
+	}
+
+	private void initDateInterval() {
+		Row dateIntervalRow = sheet.createRow(5);
+		Cell dateIntervalLabel = dateIntervalRow.createCell(0);
+		dateIntervalLabel.setCellValue("Период:");
+		Cell dateInterval = dateIntervalRow.createCell(captionCount);
+		dateInterval.setCellStyle(styles.get(XlsStyle.TABLE_HEADER));
+
+		SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+		if (fromDate != null && toDate != null) {
+			dateInterval.setCellValue(formatter.format(fromDate) + " - " + formatter.format(toDate));
+		} else if (fromDate == null) {
+			dateInterval.setCellValue("по " + formatter.format(toDate));
 		}
-		sheet = wb.createSheet();
-		sheet.setFitToPage(true);
-		sheet.setDisplayGridlines(false);
-		
-		Row titleRow = sheet.createRow(1);
-		titleCell = titleRow.createCell(0);
-		titleCell.setCellStyle(styles.get(XlsStyle.TITLE_STYLE));
-		titleRow.setHeightInPoints(45);
-		sheet.addMergedRegion(CellRangeAddress.valueOf("$A$2:$L$2"));
-		
-        // :TODO Зависит от наличия жизненной ситуации и категории
-        int datePosition = 1;
-		
-		// Date
+	}
+
+	private void initDateCell() {
 		Row dateRow = sheet.createRow(3);
 		Cell dateLabelCell = dateRow.createCell(0);
 		dateLabelCell.setCellValue("Дата формирования отчета:");
-		Cell dateCell = dateRow.createCell(datePosition);
+		Cell dateCell = dateRow.createCell(captionCount);
 		dateLabelCell.setCellStyle(styles.get(XlsStyle.SUBTITLE_STYLE));
 		Date today = new Date();
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		dateCell.setCellValue(formatter.format(today));
 		dateCell.setCellStyle(styles.get(XlsStyle.TEXT_STYLE));
-		
-		// Date interval
-		Row dateIntervalRow = sheet.createRow(5);
-		Cell dateIntervalLabel = dateIntervalRow.createCell(0);
-		dateIntervalLabel.setCellValue("Период:");
-		dateInterval = dateIntervalRow.createCell(datePosition);
-		dateInterval.setCellStyle(styles.get(XlsStyle.TABLE_HEADER));
-		
-		createRow();
-		tableHeader = createRow();
+	}
+
+	private void initTitle() {
+		Row titleRow = sheet.createRow(1);
+		Cell titleCell = titleRow.createCell(0);
+		titleCell.setCellValue(reportName);
+		titleCell.setCellStyle(styles.get(XlsStyle.TITLE_STYLE));
+		titleRow.setHeightInPoints(45);
+		sheet.addMergedRegion(CellRangeAddress.valueOf("$A$2:$L$2"));
+	}
+
+	private void initSheet() {
+		if (sheet != null) {
+			int sheetIndex = wb.getSheetIndex(sheet);
+			wb.removeSheetAt(sheetIndex);
+		}
+		sheet = wb.createSheet(reportName);
+		sheet.setFitToPage(true);
+		sheet.setDisplayGridlines(false);
 	}
 
 	private Row createRow() {
 		return sheet.createRow(sheet.getLastRowNum() + 1);
-	}
-
-	private void setTitle(String title) {
-		titleCell.setCellValue(title);
-	}
-
-	private void setDateInterval(Date today) {
-		SimpleDateFormat formatter2 = new SimpleDateFormat("dd.MM.yyyy");
-		String date1 = formatter2.format(today);
-		String date2 = formatter2.format(today);
-		dateInterval.setCellValue(date1 + "-" + date2);
 	}
 
 	@Override
@@ -144,9 +159,23 @@ public class XlsView implements ITableView {
 		
 		Row row = createRow();
 		
-		String styleName = (row.getRowNum() - headerRowNum) % 2 == 0 ? XlsStyle.TABLE_CONTENT_EVEN : XlsStyle.TABEL_CONTENT_ODD;
+		String captionStyleName = null;
+		String styleName = null;
+		if ((row.getRowNum() - headerRowNum) % 2 == 0) {
+			captionStyleName = XlsStyle.TABLE_CONTENT_CAPTION_EVEN;
+			styleName = XlsStyle.TABLE_CONTENT_EVEN;
+		} else {
+			captionStyleName = XlsStyle.TABLE_CONTENT_CAPTION_ODD;
+			styleName = XlsStyle.TABLE_CONTENT_ODD;
+		}
 		
-		for (int i = 0; i < cells.length; i++) {
+		// Название
+		if (cells.length >= captionCount) {
+			for (int i = 0; i < captionCount; i++)
+				createCell(cells[i].toString(), row, captionStyleName);
+		}
+		
+		for (int i = captionCount; i < cells.length; i++) {
 			createCell(cells[i].toString(), row, styleName);
 		}
 	}

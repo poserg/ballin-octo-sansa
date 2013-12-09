@@ -7,7 +7,6 @@ import ru.it.rpgu.web.statisticalreport.ReportConstants;
 
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Table;
-import com.vaadin.ui.TextArea;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -24,30 +23,30 @@ class TableView implements ITableView {
 	public TableView() {
 		mainLayout = new VerticalLayout();
 		refresh();
-		table.addContainerProperty("title", TextArea.class, null);
-		table.addContainerProperty("total", String.class, null);
-		
-		TextArea title = new TextArea();
-		title.setValue("Очень очень длинная строка с пробелами даже не знаю что с ней можно путного сделать. вот если бы ее ужать");
-		title.setReadOnly(true);
-		title.setWordwrap(true);
-		title.setSizeFull();
-		table.addItem(new Object[]{title, "123"}, null);
-		
-		title = new TextArea();
-		title.setValue("Мы приглашаем к участию в Kotlin Challenge всех, кто любит сложные олимпиадные задач");
-		title.setReadOnly(true);
-		title.setWordwrap(true);
-		title.setSizeFull();
-		table.addItem(new Object[]{title, "123"}, null);
-
-		title = new TextArea();
-		title.setValue("чтобы сыграть роль первопроходцев, покоряющих неизведанный край нового языка, сразиться с серьезными соперниками");
-		title.setReadOnly(true);
-		title.setWordwrap(true);
-		title.setSizeFull();
-		table.addItem(new Object[]{title, "123"}, null);
-
+//		table.addContainerProperty("title", TextArea.class, null);
+//		table.addContainerProperty("total", String.class, null);
+//		
+//		TextArea title = new TextArea();
+//		title.setValue("Очень очень длинная строка с пробелами даже не знаю что с ней можно путного сделать. вот если бы ее ужать");
+//		title.setReadOnly(true);
+//		title.setWordwrap(true);
+//		title.setSizeFull();
+//		table.addItem(new Object[]{title, "123"}, null);
+//		
+//		title = new TextArea();
+//		title.setValue("Мы приглашаем к участию в Kotlin Challenge всех, кто любит сложные олимпиадные задач");
+//		title.setReadOnly(true);
+//		title.setWordwrap(true);
+//		title.setSizeFull();
+//		table.addItem(new Object[]{title, "123"}, null);
+//
+//		title = new TextArea();
+//		title.setValue("чтобы сыграть роль первопроходцев, покоряющих неизведанный край нового языка, сразиться с серьезными соперниками");
+//		title.setReadOnly(true);
+//		title.setWordwrap(true);
+//		title.setSizeFull();
+//		table.addItem(new Object[]{title, "123"}, null);
+//
 	}
 	
 	public Component getView() {
@@ -73,7 +72,7 @@ class TableView implements ITableView {
 
 	@Override
 	public void addColumn(String name) {
-		addColumn(name, TextArea.class);
+		addColumn(name, String.class);
 	}
 	
 	@Override
@@ -100,7 +99,7 @@ class TableView implements ITableView {
 	
 	public void addItem(String cell) {
 		Object[] cells = new Object[1];
-		cells[0] = cell;
+		cells[0] = cell.toUpperCase();
 		addItem(cells);
 	}
 	
@@ -116,17 +115,18 @@ class TableView implements ITableView {
 	 * @param cells
 	 */
 	private void addItemToTable(Object[] cells) {
-		TextArea[] row = new TextArea[cells.length];
-		for (int i = 0; i < cells.length; i++) {
-			TextArea cell = new TextArea();
-			cell.setValue(cells[i].toString());
-			cell.setWordwrap(true);
-			cell.setReadOnly(true);
-			cell.setSizeFull();
-			
-			row[i] = cell;
-		}
-		table.addItem(row, null);
+//		TextArea[] row = new TextArea[cells.length];
+//		for (int i = 0; i < cells.length; i++) {
+//			TextArea cell = new TextArea();
+//			cell.setValue(cells[i].toString());
+//			cell.setWordwrap(true);
+//			cell.setReadOnly(true);
+//			cell.setSizeFull();
+//			
+//			row[i] = cell;
+//		}
+//		table.addItem(row, null);
+		table.addItem(cells, null);
 	}
 
 	public void setFooter(String string, String string2) {

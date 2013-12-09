@@ -3,6 +3,8 @@ package ru.it.rpgu.web.statisticalreport;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -13,11 +15,13 @@ import ru.it.rpgu.web.statisticalreport.filter.FilterState;
 import ru.it.rpgu.web.statisticalreport.table.TableController;
 import ru.it.rpgu.web.statisticalreport.table.xls.XlsController;
 
+import com.vaadin.server.FileDownloader;
 import com.vaadin.server.StreamResource;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.AbstractComponent;
 
 /**
  * @author Sergey Popov (sergey_popov@relex.ru)
@@ -36,12 +40,6 @@ public class ReportFormController {
 		void setFormButtonListener(ClickListener clickListener);
 		
 		/**
-		 * Установить слушатель на кнопки Выгрузить в Excel.
-		 * @param clickListener
-		 */
-		void setExportToExcelButtonListener(ClickListener clickListener);
-		
-		/**
 		 * Установить представление фильтра.
 		 * @param filterView
 		 */
@@ -52,6 +50,12 @@ public class ReportFormController {
 		 * @param tableView
 		 */
 		void setTableView(Component tableView);
+		
+		AbstractComponent getExportToExcelTopButton();
+
+		AbstractComponent getExportToExcelBottomButton();
+		
+		void showDownloadButtons();
 	}
 	
 	final IReportForm view;
@@ -62,25 +66,7 @@ public class ReportFormController {
 		filterController = new FilterController();
 		tableController = new TableController();
 		
-		view = new ReportForm(new StreamResource.StreamSource() {
-			
-			@Override
-			public InputStream getStream() {
-				FilterState currentFilterState = filterController
-						.getCurrentFilterState();
-
-				if (validateDates(currentFilterState.getFromDate(),
-						currentFilterState.getToDate())) {
-
-					ReportFilterStateModel searchParam = FilterState.toSearchParam(currentFilterState);
-
-					byte[] xlsFile = tableController.createXlsFile();
-					return new ByteArrayInputStream(xlsFile);
-				}
-
-				return null;
-			}
-		});
+		view = new ReportForm();
 		view.setFilterView(filterController.getView());
 		view.setTableView(tableController.getView());
 		
@@ -94,40 +80,55 @@ public class ReportFormController {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				// System.out.println("started button click");
-
 				FilterState currentFilterState = filterController
 						.getCurrentFilterState();
 				
-				// System.out.println("State was getted");
-				// System.out.println("fromDate = " + currentFilterState.getFromDate());
-				// System.out.println("toDate = " + currentFilterState.getToDate());
-
 				if (validateDates(currentFilterState.getFromDate(),
 						currentFilterState.getToDate())) {
 
 					ReportFilterStateModel searchParam = FilterState.toSearchParam(currentFilterState);
 					
-					// System.out.println("started query");
 					filterController.getCurrentFilterStrategy().getReport(searchParam, currentFilterState, tableController);
-					// System.out.println("size report = " + report != null ? report.size() : "null");
-					// System.out.println("set datatable");
-					// setDataTable(currentFilterState, report);
 				}
 			}
 
 		});
-		
-		view.setExportToExcelButtonListener(new ClickListener() {
-			
-			private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
+		AbstractComponent topExportToExcellButton = view.getExportToExcelTopButton();
+		AbstractComponent bottomExportToExcellButton = view.getExportToExcelBottomButton();
+		
+		FileDownloader fileDownloaderTop = new FileDownloader(getExcelStream());
+		fileDownloaderTop.extend(topExportToExcellButton);
+
+		FileDownloader fileDownloaderBottom = new FileDownloader(getExcelStream());
+		fileDownloaderBottom.extend(bottomExportToExcellButton);
+		
+	}
+	
+
+	private StreamResource getExcelStream() {
+		SimpleDateFormat formatter = new SimpleDateFormat("yy_MM_dd_");
+		StringBuilder sb = new StringBuilder();
+		sb.append(formatter.format(new Date()));
+		sb.append(filterController.getCurrentFilterStrategy()
+				.getReportFileName());
+		sb.append(".xls");
+
+		StreamResource resource = new StreamResource(
+				new StreamResource.StreamSource() {
+
+					@Override
+					public InputStream getStream() {
+						byte[] xlsFile = tableController.createXlsFile(
+								filterController.getCurrentFilterStrategy()
+										.getReportFileName(), filterController
+										.getCurrentFilterState().getFromDate(),
+								filterController.getCurrentFilterState()
+										.getToDate());
+						return new ByteArrayInputStream(xlsFile);
+					}
+				}, sb.toString());
+		return resource;
 	}
 	
 	/**

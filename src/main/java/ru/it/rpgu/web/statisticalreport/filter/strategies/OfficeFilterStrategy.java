@@ -15,6 +15,8 @@ import ru.it.rpgu.web.statisticalreport.table.ITableController;
  */
 class OfficeFilterStrategy extends AbstractOfficeStrategy implements IFilterStrategy {
 
+	private static final String REPORT_FILE_NAME = "Отчет_по_заявкам_в_разрезе_ведомств";
+
 	/* (non-Javadoc)
 	 * @see ru.it.rpgu.web.view.IFilterStrategy#buildFilterLayout(ru.it.rpgu.web.view.FilterController.IFilterView)
 	 */
@@ -37,6 +39,16 @@ class OfficeFilterStrategy extends AbstractOfficeStrategy implements IFilterStra
 			FilterState currentFilterState, ITableController tableController) {
 		List<Report> reportList = StatisticalReportDAO.getDepartmentsReport(searchParam);
 		createTableModel(tableController, reportList);
+	}
+
+	@Override
+	public String getReportName() {
+		return ReportTypeEnum.OFFICE.name();
+	}
+
+	@Override
+	public String getReportFileName() {
+		return REPORT_FILE_NAME;
 	}
 
 }

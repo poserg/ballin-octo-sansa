@@ -2,6 +2,7 @@ package ru.it.rpgu.web.statisticalreport.table;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import ru.it.rpgu.core.model.statisticalreport.ApplicationState;
@@ -37,8 +38,8 @@ public class TableController implements ITableController {
 		generateTable(tableModel, tableView);
 	}
 	
-	public byte[] createXlsFile() {
-		XlsView xlsView = new XlsView();
+	public byte[] createXlsFile(String reportName, Date fromDate, Date toDate) {
+		XlsView xlsView = new XlsView(reportName, fromDate, toDate, tableModel.getCategory(), tableModel.getLifeSituation());
 		generateTable(tableModel, xlsView);
 		return xlsView.getFile();
 	}
@@ -67,7 +68,7 @@ public class TableController implements ITableController {
 				row[curCol++] = report.getName();
 				
 				if (tableModel.getCategory())
-					row[curCol++] = ""; //:TODO
+					row[curCol++] = report.get; //:TODO
 				
 				if (tableModel.getLifeSituation())
 					row[curCol++] = ""; //:TODO

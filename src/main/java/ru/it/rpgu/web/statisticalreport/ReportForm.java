@@ -6,6 +6,7 @@ import com.vaadin.server.FileDownloader;
 import com.vaadin.server.StreamResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.FormLayout;
@@ -30,10 +31,7 @@ class ReportForm extends CustomComponent implements IReportForm {
 	Button formButton, topExportToExcellButton, bottomExportToExcellButton;
 	HorizontalLayout filterLayout, tableLayout;
 	
-	private final StreamResource.StreamSource source;
-
-	public ReportForm(StreamResource.StreamSource source) {
-		this.source = source;
+	public ReportForm() {
 		Component mainLayout = buildMainLayout();
 		setCompositionRoot(mainLayout);
 	}
@@ -48,19 +46,15 @@ class ReportForm extends CustomComponent implements IReportForm {
 		HorizontalLayout buttonLayout = new HorizontalLayout();
 		formButton = new Button(FORM);
 		topExportToExcellButton = new Button(EXPORT_TO_EXCEL);
+		topExportToExcellButton.setVisible(false);
 		buttonLayout.addComponents(formButton, topExportToExcellButton);
 
 		tableLayout = new HorizontalLayout();
 		
 		bottomExportToExcellButton = new Button(EXPORT_TO_EXCEL);
+		bottomExportToExcellButton.setVisible(false);
 		
 		mainLayout.addComponents(panel, buttonLayout, tableLayout, bottomExportToExcellButton);
-		
-		FileDownloader fileDownloaderTop = new FileDownloader(getExcelStream());
-		fileDownloaderTop.extend(topExportToExcellButton);
-
-		FileDownloader fileDownloaderBottom = new FileDownloader(getExcelStream());
-		fileDownloaderBottom.extend(bottomExportToExcellButton);
 		
 		return mainLayout;
 	}
@@ -75,12 +69,6 @@ class ReportForm extends CustomComponent implements IReportForm {
 		formButton.addClickListener(clickListener);
 	}
 
-	@Override
-	public void setExportToExcelButtonListener(ClickListener clickListener) {
-		topExportToExcellButton.addClickListener(clickListener);
-		bottomExportToExcellButton.addClickListener(clickListener);
-	}
-	
 	@Override
 	public void setFilterView(Component filterView) {
 		setViewToLayout(filterLayout, filterView);
@@ -99,8 +87,19 @@ class ReportForm extends CustomComponent implements IReportForm {
 		layout.addComponent(view);
 	}
 
-	private StreamResource getExcelStream() {
-		StreamResource resource = new StreamResource ( source, "report.xls");
-		return resource;
+	@Override
+	public AbstractComponent getExportToExcelTopButton() {
+		return topExportToExcellButton;
+	}
+
+	@Override
+	public AbstractComponent getExportToExcelBottomButton() {
+		return bottomExportToExcellButton;
+	}
+
+	@Override
+	public void showDownloadButtons() {
+		topExportToExcellButton.setVisible(true);
+		bottomExportToExcellButton.setVisible(true);
 	}
 }

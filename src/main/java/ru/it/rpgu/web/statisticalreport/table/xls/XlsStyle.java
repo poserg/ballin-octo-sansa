@@ -14,7 +14,9 @@ class XlsStyle {
 	public static final String TOTAL = "total";
 	public static final String TOTAL_TITLE = "total_title";
 	public static final String TABLE_CONTENT_EVEN = "table_content_even";
-	public static final String TABEL_CONTENT_ODD = "tabel_content_odd";
+	public static final String TABLE_CONTENT_CAPTION_EVEN = "table_content_caption_even";
+	public static final String TABLE_CONTENT_ODD = "tabel_content_odd";
+	public static final String TABLE_CONTENT_CAPTION_ODD = "tabel_content_caption_odd";
 	public static final String TABLE_HEADER = "table_header";
 	public static final String TEXT_STYLE = "text_style";
 	public static final String SUBTITLE_STYLE = "subtitle_style";
@@ -62,15 +64,28 @@ class XlsStyle {
 		
 		CellStyle tableContentOddStyle = wb.createCellStyle();
 		tableContentOddStyle.setFont(textFont);
+		tableContentOddStyle.setAlignment(CellStyle.ALIGN_CENTER);
 		setBorders(tableContentOddStyle);
-		styles.put(TABEL_CONTENT_ODD, tableContentOddStyle);
+		styles.put(TABLE_CONTENT_ODD, tableContentOddStyle);
 		
+		CellStyle tableContentCaptionOddStyle = wb.createCellStyle();
+		tableContentCaptionOddStyle.setFont(textFont);
+		setBorders(tableContentCaptionOddStyle);
+		styles.put(TABLE_CONTENT_CAPTION_ODD, tableContentCaptionOddStyle);
+
 		CellStyle tableContentEvenStyle = wb.createCellStyle();
 		tableContentEvenStyle.setFont(textFont);
+		tableContentEvenStyle.setAlignment(CellStyle.ALIGN_CENTER);
 		setBackgroud(tableContentEvenStyle, IndexedColors.GREY_25_PERCENT);
 		setBorders(tableContentEvenStyle);
 		styles.put(TABLE_CONTENT_EVEN, tableContentEvenStyle);
 		
+		CellStyle tableContentCaptionEvenStyle = wb.createCellStyle();
+		tableContentCaptionEvenStyle.setFont(textFont);
+		setBackgroud(tableContentCaptionEvenStyle, IndexedColors.GREY_25_PERCENT);
+		setBorders(tableContentCaptionEvenStyle);
+		styles.put(TABLE_CONTENT_CAPTION_EVEN, tableContentCaptionEvenStyle);
+
 		CellStyle totalTitleCellStyle = wb.createCellStyle();
 		totalTitleCellStyle.setFont(subtitleFont);
 		totalTitleCellStyle.setAlignment(CellStyle.ALIGN_RIGHT);
