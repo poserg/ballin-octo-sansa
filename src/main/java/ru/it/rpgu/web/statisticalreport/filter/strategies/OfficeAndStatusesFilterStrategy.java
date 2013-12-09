@@ -43,11 +43,11 @@ class OfficeAndStatusesFilterStrategy extends AbstractOfficeStrategy implements 
 
 	@Override
 	public String getReportName() {
-		return ReportTypeEnum.OFFICE_AND_STATUSES.name();
+		return ReportTypeEnum.OFFICE_AND_STATUSES.toString();
 	}
 
 	@Override
 	public String getReportFileName() {
-		return REPORT_FILE_NAME;
+		return "office_with_statuses_report";
 	}
 }

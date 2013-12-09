@@ -67,11 +67,15 @@ public class TableController implements ITableController {
 				String[] row = new String[colCount];
 				row[curCol++] = report.getName();
 				
-				if (tableModel.getCategory())
-					row[curCol++] = report.get; //:TODO
+				if (tableModel.getCategory()) {
+				        String category = report.getCategory();
+					row[curCol++] = category != null ? category : ReportConstants.EMPTY_STRING; //:TODO
+				}
 				
-				if (tableModel.getLifeSituation())
-					row[curCol++] = ""; //:TODO
+				if (tableModel.getLifeSituation()) {
+				        String lifeSituation = report.getLifeSituation();
+					row[curCol++] = lifeSituation != null ? lifeSituation : ReportConstants.EMPTY_STRING; //:TODO
+				}
 				
 				//Всего
 				row[curCol++] = table.getTotalCountByStatuses().get(i).toString();
@@ -98,7 +102,7 @@ public class TableController implements ITableController {
 			List<Object> row;
 			row = createRow(tableModel.getCategory(),
 					tableModel.getLifeSituation(),
-					ReportConstants.EMPTY_STRING, tableModel.getAllTotal(), tableModel.getTotalRow());
+					ReportConstants.TOTAL, tableModel.getAllTotal(), tableModel.getTotalRow());
 			tableView.setFooter(row);
 		}
 	}

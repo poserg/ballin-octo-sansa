@@ -16,6 +16,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 
+import ru.it.rpgu.web.statisticalreport.ReportConstants;
 import ru.it.rpgu.web.statisticalreport.table.ITableView;
 
 /**
@@ -184,7 +185,12 @@ public class XlsView implements ITableView {
 	public void addItem(String cell) {
 		Row row = createRow();
 		tableHeader = row;
-		createCell(cell, row, XlsStyle.SUBTITLE_STYLE);
+		String styleName = XlsStyle.SUBTITLE_STYLE;
+		createCell(cell, row, styleName);
+		
+		for (int i = 1; i < columnNames.size(); i++) {
+			createCell(ReportConstants.EMPTY_STRING, tableHeader, styleName);
+		}
 	}
 
 	private void createCell(String value, Row row, String styleName) {

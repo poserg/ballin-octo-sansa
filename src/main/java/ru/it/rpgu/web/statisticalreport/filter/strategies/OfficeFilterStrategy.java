@@ -43,12 +43,12 @@ class OfficeFilterStrategy extends AbstractOfficeStrategy implements IFilterStra
 
 	@Override
 	public String getReportName() {
-		return ReportTypeEnum.OFFICE.name();
+		return ReportTypeEnum.OFFICE.toString();
 	}
 
 	@Override
 	public String getReportFileName() {
-		return REPORT_FILE_NAME;
+		return "office_report";
 	}
 
 }

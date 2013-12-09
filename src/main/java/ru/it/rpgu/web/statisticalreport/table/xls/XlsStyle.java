@@ -41,6 +41,7 @@ class XlsStyle {
 		subtitleFont.setFontHeightInPoints((short) 11);
 		CellStyle subtitleStyle = wb.createCellStyle();
 		subtitleStyle.setFont(subtitleFont);
+		setBackgroud(subtitleStyle, IndexedColors.GREY_40_PERCENT);
 		styles.put(SUBTITLE_STYLE, subtitleStyle);
 		
 		Font textFont = wb.createFont();

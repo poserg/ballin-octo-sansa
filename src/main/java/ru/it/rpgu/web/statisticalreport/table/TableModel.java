@@ -12,7 +12,7 @@ import ru.it.rpgu.core.model.statisticalreport.Report;
  */
 public class TableModel implements ITableModel {
 
-	private List<Report> reportList;
+	private final List<Report> reportList;
 	private final List<Integer> totalCountByStatuses;
 	private final List<Integer> totalRow;
 	private final Integer allTotal;
@@ -21,7 +21,7 @@ public class TableModel implements ITableModel {
 		this.reportList = reportList;
 		totalCountByStatuses = getTotalCountByStatuses(reportList);
 		totalRow = calcTotalRow(reportList);
-		allTotal = calcAllTotal(totalRow);
+		allTotal = calcAllTotal(totalCountByStatuses);
 	}
 
 	private Integer calcAllTotal(List<Integer> totalRow) {
@@ -51,18 +51,7 @@ public class TableModel implements ITableModel {
 		List<Integer> result;
 		if (reportList.size() > 0 && reportList.get(0).getApplicationStates() != null && reportList.get(0).getApplicationStates().size() > 0) {
 			List<ApplicationState> applicationStates = reportList.get(0).getApplicationStates();
-			for (Report report : reportList) {
-		                System.out.println("department = " + report.getName());
-			        if (report.getApplicationStates() != null) {
-			                for (ApplicationState state : report.getApplicationStates()) {
-			                        System.out.println("State: " + state.getStateName() + "; count = " + state.getApplicationCount());
-                                        }
-			        }
-			}
 			size = applicationStates.size();
-        		System.out.println("++++++++++++++++++++");
-			System.out.println("size = " + size);
-        		System.out.println("++++++++++++++++++++");
 			result = new ArrayList<Integer>(size);
 			initArray(result, size);
 			countTotalRow(result);
@@ -89,12 +78,13 @@ public class TableModel implements ITableModel {
 			for (int i = 0; i < report.getApplicationStates().size(); i++) {
 				// Нужно чтобы статусы приходили в одинаковом порядке!
 				ApplicationState state = report.getApplicationStates().get(i);
-                                result.set(i, result.get(i) + state.getApplicationCount());
+				result.set(i, result.get(i) + state.getApplicationCount());
 			}
 		}
 	}
 
 	private void countTotalBytStatuses(List<Integer> totalCountByStatuses) {
+	        List<Report> reportToRemove = new ArrayList<Report>();
 		for (Report report : reportList) {
 			Integer total = 0;
 			if (report.getApplicationStates() != null && report.getApplicationStates().size() > 0) {
@@ -107,11 +97,14 @@ public class TableModel implements ITableModel {
 			
 			if (total == 0) {
 				// Нет заявок для ведомства/услуги.
-				reportList.remove(report);
-			}
-			
-			totalCountByStatuses.add(total);
+				reportToRemove.add(report);
+			} else {
+        		totalCountByStatuses.add(total);
+        	}
 		}
+		
+		for (Report report : reportToRemove)
+		        reportList.remove(report);
 	}
 
 	@Override

@@ -133,7 +133,6 @@ public class FilterState {
 
 		if (filterState.getCheckedStatuses() != null) {
 			for (StatusValue statusValue : filterState.getCheckedStatuses()) {
-			        System.out.println("statusValue = "  + statusValue);
 				statusValue.getStrategy().setCheck(searchParam);
 			}
 		}

@@ -3,7 +3,6 @@ package ru.it.rpgu.web.statisticalreport;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -13,15 +12,14 @@ import ru.it.rpgu.core.model.statisticalreport.ReportFilterStateModel;
 import ru.it.rpgu.web.statisticalreport.filter.FilterController;
 import ru.it.rpgu.web.statisticalreport.filter.FilterState;
 import ru.it.rpgu.web.statisticalreport.table.TableController;
-import ru.it.rpgu.web.statisticalreport.table.xls.XlsController;
 
 import com.vaadin.server.FileDownloader;
 import com.vaadin.server.StreamResource;
+import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.AbstractComponent;
 
 /**
  * @author Sergey Popov (sergey_popov@relex.ru)
@@ -89,6 +87,7 @@ public class ReportFormController {
 					ReportFilterStateModel searchParam = FilterState.toSearchParam(currentFilterState);
 					
 					filterController.getCurrentFilterStrategy().getReport(searchParam, currentFilterState, tableController);
+					view.showDownloadButtons();
 				}
 			}
 
@@ -117,11 +116,16 @@ public class ReportFormController {
 		StreamResource resource = new StreamResource(
 				new StreamResource.StreamSource() {
 
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = 503814320458800520L;
+
 					@Override
 					public InputStream getStream() {
 						byte[] xlsFile = tableController.createXlsFile(
 								filterController.getCurrentFilterStrategy()
-										.getReportFileName(), filterController
+										.getReportName(), filterController
 										.getCurrentFilterState().getFromDate(),
 								filterController.getCurrentFilterState()
 										.getToDate());

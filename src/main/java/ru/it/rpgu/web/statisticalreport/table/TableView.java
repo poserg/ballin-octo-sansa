@@ -7,6 +7,7 @@ import ru.it.rpgu.web.statisticalreport.ReportConstants;
 
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Table;
+import com.vaadin.ui.Table.Align;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -57,6 +58,7 @@ class TableView implements ITableView {
 	public void refresh() {
 		mainLayout.removeAllComponents();
 		table = new Table();
+		table.setSizeUndefined();
 		mainLayout.addComponent(table);
 		table.setFooterVisible(true);
 		table.setSizeFull();
@@ -67,6 +69,8 @@ class TableView implements ITableView {
 	public void addColumn(String name, Class<?> type) {
 		table.addContainerProperty(name, type, null);
 		columnsCount++;
+		if (columnsCount > 0)
+			table.setColumnAlignment(name, Align.CENTER);
 		columnNames.add(name);
 	}
 
@@ -81,6 +85,7 @@ class TableView implements ITableView {
 		table.setColumnWidth(columnName, width);
 	}
 	
+	@Override
 	public void addItem(Object[] cells) {
 		if (cells.length < columnsCount) {
 			// Если в массиве не достаточное количество элементов
@@ -97,12 +102,14 @@ class TableView implements ITableView {
 		}
 	}
 	
+	@Override
 	public void addItem(String cell) {
 		Object[] cells = new Object[1];
 		cells[0] = cell.toUpperCase();
 		addItem(cells);
 	}
 	
+	@Override
 	public void addItem(List<Object> list) {
 		Object[] cells = new Object[list.size()];
 		for (int i = 0; i < list.size(); i++) {
@@ -133,6 +140,7 @@ class TableView implements ITableView {
 		table.setColumnFooter(string, string2);
 	}
 
+	@Override
 	public void setFooter(List<Object> row) {
 		for (int i = 0; i < row.size(); i++) {
 			setFooter(columnNames.get(i), row.get(i).toString());

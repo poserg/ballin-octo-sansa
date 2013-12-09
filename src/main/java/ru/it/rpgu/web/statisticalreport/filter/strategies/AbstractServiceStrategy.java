@@ -2,7 +2,6 @@ package ru.it.rpgu.web.statisticalreport.filter.strategies;
 
 import java.util.List;
 
-import ru.it.rpgu.core.dao.StatisticalReportDAO;
 import ru.it.rpgu.core.model.statisticalreport.Report;
 import ru.it.rpgu.core.model.statisticalreport.ReportFilterStateModel;
 import ru.it.rpgu.web.statisticalreport.ReportConstants;
@@ -17,29 +16,23 @@ abstract class AbstractServiceStrategy {
 	 * @param isMunicipal
 	 * @param isRegional
 	 */
-	protected void createTableModel(ReportFilterStateModel searchParam, ITableController tableController, Boolean isMunicipal,
-			Boolean isRegional) {
+	protected void createTableModel(ReportFilterStateModel searchParam, ITableController tableController, List<Report> municipalReportList,
+			List<Report> regionalReportList) {
 				TableModelAgregator tableModel = new TableModelAgregator(ReportConstants.SERVICE);
 			
-				if (isMunicipal) {
-					searchParam.setIsMunicipal(true);
-					searchParam.setIsRegional(false);
-					List<Report> reportList = StatisticalReportDAO.getServicesReport(searchParam);
-					tableModel.addModel(reportList, ReportConstants.MUNICIPAL_SERVICE, ReportConstants.TOTAL_MUNICIPAL);
+				if (municipalReportList != null) {
+					tableModel.addModel(municipalReportList, ReportConstants.MUNICIPAL_SERVICE, ReportConstants.TOTAL_MUNICIPAL);
 				}
 				
-				if (isRegional) {
-					searchParam.setIsMunicipal(false);
-					searchParam.setIsRegional(true);
-					List<Report> reportList = StatisticalReportDAO.getServicesReport(searchParam);
-					tableModel.addModel(reportList, ReportConstants.REGIONAL_SERVICE, ReportConstants.TOTAL_REGIONAL);
+				if (regionalReportList != null) {
+					tableModel.addModel(regionalReportList, ReportConstants.REGIONAL_SERVICE, ReportConstants.TOTAL_REGIONAL);
 				}
 			
-				Boolean lifeSituation = searchParam.isLifeSituation();
+				Boolean lifeSituation = searchParam.getLifeSituation();
 				if (lifeSituation != null && lifeSituation)
 					tableModel.setLifeSituation();
 				
-				Boolean serviceCategory = searchParam.isServiceCategory();
+				Boolean serviceCategory = searchParam.getServiceCategory();
 				if (serviceCategory != null && serviceCategory)
 					tableModel.setCategory();
 				

@@ -2,11 +2,9 @@ package ru.it.rpgu.web.statisticalreport;
 
 import ru.it.rpgu.web.statisticalreport.ReportFormController.IReportForm;
 
-import com.vaadin.server.FileDownloader;
-import com.vaadin.server.StreamResource;
+import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.FormLayout;
@@ -42,6 +40,8 @@ class ReportForm extends CustomComponent implements IReportForm {
 		
 		filterLayout = new HorizontalLayout();
 		panel.setContent(filterLayout);
+		panel.getContent().setSizeUndefined();
+		panel.setSizeUndefined();
 		
 		HorizontalLayout buttonLayout = new HorizontalLayout();
 		formButton = new Button(FORM);
@@ -50,6 +50,7 @@ class ReportForm extends CustomComponent implements IReportForm {
 		buttonLayout.addComponents(formButton, topExportToExcellButton);
 
 		tableLayout = new HorizontalLayout();
+		tableLayout.setSizeUndefined();
 		
 		bottomExportToExcellButton = new Button(EXPORT_TO_EXCEL);
 		bottomExportToExcellButton.setVisible(false);
