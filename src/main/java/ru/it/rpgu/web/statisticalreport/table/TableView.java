@@ -37,7 +37,6 @@ class TableView implements ITableView {
 	public void refresh() {
 		table = new Table();
 		mainLayout.setContent(table);
-		table.setFooterVisible(true);
 		table.setSizeUndefined();
 		table.setSizeFull();
 		table.setSortEnabled(false);
@@ -122,9 +121,7 @@ class TableView implements ITableView {
 
 	@Override
 	public void setFooter(List<Object> row) {
-		for (int i = 0; i < row.size(); i++) {
-			setFooter(columnNames.get(i), row.get(i).toString());
-		}
+		addItem(row);
 	}
 
 	@Override
