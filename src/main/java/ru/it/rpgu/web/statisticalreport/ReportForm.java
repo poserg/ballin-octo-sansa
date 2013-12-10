@@ -40,8 +40,8 @@ class ReportForm extends CustomComponent implements IReportForm {
 		
 		filterLayout = new HorizontalLayout();
 		panel.setContent(filterLayout);
-		panel.getContent().setSizeUndefined();
-		panel.setSizeUndefined();
+		//panel.getContent().setSizeUndefined();
+		//panel.setSizeUndefined();
 		
 		HorizontalLayout buttonLayout = new HorizontalLayout();
 		formButton = new Button(FORM);
@@ -50,7 +50,8 @@ class ReportForm extends CustomComponent implements IReportForm {
 		buttonLayout.addComponents(formButton, topExportToExcellButton);
 
 		tableLayout = new HorizontalLayout();
-		tableLayout.setSizeUndefined();
+		//tableLayout.setSizeUndefined();
+		tableLayout.setVisible(false);
 		
 		bottomExportToExcellButton = new Button(EXPORT_TO_EXCEL);
 		bottomExportToExcellButton.setVisible(false);
@@ -102,5 +103,6 @@ class ReportForm extends CustomComponent implements IReportForm {
 	public void showDownloadButtons() {
 		topExportToExcellButton.setVisible(true);
 		bottomExportToExcellButton.setVisible(true);
+		tableLayout.setVisible(true);
 	}
 }

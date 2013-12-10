@@ -39,7 +39,7 @@ public class TableController implements ITableController {
 	}
 	
 	public byte[] createXlsFile(String reportName, Date fromDate, Date toDate) {
-		XlsView xlsView = new XlsView(reportName, fromDate, toDate, tableModel.getCategory(), tableModel.getLifeSituation());
+		XlsView xlsView = new XlsView(reportName, fromDate, toDate);
 		generateTable(tableModel, xlsView);
 		return xlsView.getFile();
 	}
@@ -68,12 +68,12 @@ public class TableController implements ITableController {
 				row[curCol++] = report.getName();
 				
 				if (tableModel.getCategory()) {
-				        String category = report.getCategory();
+					String category = report.getCategory();
 					row[curCol++] = category != null ? category : ReportConstants.EMPTY_STRING; //:TODO
 				}
 				
 				if (tableModel.getLifeSituation()) {
-				        String lifeSituation = report.getLifeSituation();
+					String lifeSituation = report.getLifeSituation();
 					row[curCol++] = lifeSituation != null ? lifeSituation : ReportConstants.EMPTY_STRING; //:TODO
 				}
 				
@@ -144,6 +144,9 @@ public class TableController implements ITableController {
 
 	private void setColumns(ITableView tableView, String mainColumnTitle, List<String> statusColumnNames,
 			Boolean serviceCategory, Boolean lifeSituation) {
+
+		int tableCaptionCount = getTableCaptionCount(serviceCategory, lifeSituation);
+		tableView.setTableCaptionCount(tableCaptionCount);
 		tableView.refresh();
 
 		tableView.addColumn(mainColumnTitle, TITLE_COLUMN_WIDTH);
@@ -161,5 +164,19 @@ public class TableController implements ITableController {
 		for (String columnName : statusColumnNames) {
 			tableView.addColumn(columnName);
 		}
+		
+	}
+	
+	private int getTableCaptionCount(Boolean serviceCategory, Boolean lifeSituation) {
+		int tableCaptionCount = 1;
+		if (serviceCategory != null && serviceCategory) {
+			tableCaptionCount++;
+		}
+
+		if (lifeSituation != null && lifeSituation) {
+			tableCaptionCount++;
+		}
+		
+		return tableCaptionCount;
 	}
 }

@@ -35,19 +35,13 @@ public class XlsView implements ITableView {
 	private List<String> columnNames;
 	private int captionCount;
 	
-	public XlsView(String reportName, Date fromDate, Date toDate, boolean isCategory, boolean isLifeSituation) {
+	public XlsView(String reportName, Date fromDate, Date toDate) {
 		this.fromDate = fromDate;
 		this.toDate = toDate == null ? new Date() : toDate;
 		
-		captionCount = 1;
-		if (isCategory)
-			captionCount++;
-		if (isLifeSituation)
-			captionCount++;
 		wb = new HSSFWorkbook();
 		styles = XlsStyle.createStyles(wb);
 		this.reportName = reportName;
-		refresh();
 	}
 	
 	@Override
@@ -211,5 +205,10 @@ public class XlsView implements ITableView {
 		for (int i = 1; i < list.size(); i++) {
 			createCell(list.get(i).toString(), footer, XlsStyle.TOTAL);
 		}
+	}
+
+	@Override
+	public void setTableCaptionCount(int tableCaption) {
+		captionCount = tableCaption;
 	}
 }

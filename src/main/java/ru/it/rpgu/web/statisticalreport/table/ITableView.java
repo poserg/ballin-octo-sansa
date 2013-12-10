@@ -25,4 +25,10 @@ public interface ITableView {
 	void addItem(String cell);
 	
 	void addItem(List<Object> list);
+
+	/**
+	 * Количество текстовых столбцов.
+	 * @param tableCaption
+	 */
+	void setTableCaptionCount(int tableCaption);
 }
