@@ -8,7 +8,12 @@ import java.util.List;
 import ru.it.rpgu.core.model.statisticalreport.ApplicationState;
 import ru.it.rpgu.core.model.statisticalreport.Report;
 import ru.it.rpgu.web.statisticalreport.ReportConstants;
-import ru.it.rpgu.web.statisticalreport.table.xls.XlsView;
+import ru.it.rpgu.web.statisticalreport.table.model.ModelItem;
+import ru.it.rpgu.web.statisticalreport.table.model.TableModel;
+import ru.it.rpgu.web.statisticalreport.table.model.TableModelAgregator;
+import ru.it.rpgu.web.statisticalreport.table.view.ITableView;
+import ru.it.rpgu.web.statisticalreport.table.view.TableView;
+import ru.it.rpgu.web.statisticalreport.table.view.XlsView;
 
 import com.vaadin.ui.Component;
 

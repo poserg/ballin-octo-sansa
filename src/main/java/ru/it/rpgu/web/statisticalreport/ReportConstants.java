@@ -21,4 +21,6 @@ public class ReportConstants {
 	public static final String CATEGORY_OF_SERVICE = "Категория услуг";
 	public static final String OFFICE_NAME = "Наименование ведомства";
 	public static final String SERVICE_NAME = "Наименование услуги";
+	
+	public static final String REPORT_DATE = "Дата формирования отчета:";
 }

@@ -6,7 +6,7 @@ import ru.it.rpgu.core.model.statisticalreport.Report;
 import ru.it.rpgu.core.model.statisticalreport.ReportFilterStateModel;
 import ru.it.rpgu.web.statisticalreport.ReportConstants;
 import ru.it.rpgu.web.statisticalreport.table.ITableController;
-import ru.it.rpgu.web.statisticalreport.table.TableModelAgregator;
+import ru.it.rpgu.web.statisticalreport.table.model.TableModelAgregator;
 
 abstract class AbstractServiceStrategy {
 
