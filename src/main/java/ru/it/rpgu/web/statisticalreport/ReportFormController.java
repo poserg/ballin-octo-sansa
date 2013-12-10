@@ -5,16 +5,13 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
-import ru.it.rpgu.core.model.statisticalreport.Report;
 import ru.it.rpgu.core.model.statisticalreport.ReportFilterStateModel;
+import ru.it.rpgu.web.statisticalreport.OnDemandFileDownloader.OnDemandStreamResource;
 import ru.it.rpgu.web.statisticalreport.filter.FilterController;
 import ru.it.rpgu.web.statisticalreport.filter.FilterState;
 import ru.it.rpgu.web.statisticalreport.table.TableController;
 
-import com.vaadin.server.FileDownloader;
-import com.vaadin.server.StreamResource;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -96,56 +93,45 @@ public class ReportFormController {
 		AbstractComponent topExportToExcellButton = view.getExportToExcelTopButton();
 		AbstractComponent bottomExportToExcellButton = view.getExportToExcelBottomButton();
 		
-		FileDownloader fileDownloaderTop = new FileDownloader(getExcelStream());
+		OnDemandFileDownloader fileDownloaderTop = new OnDemandFileDownloader(getExcelStreamResource());
 		fileDownloaderTop.extend(topExportToExcellButton);
 
-		FileDownloader fileDownloaderBottom = new FileDownloader(getExcelStream());
+		OnDemandFileDownloader fileDownloaderBottom = new OnDemandFileDownloader(getExcelStreamResource());
 		fileDownloaderBottom.extend(bottomExportToExcellButton);
 		
 	}
 	
 
-	private StreamResource getExcelStream() {
-		SimpleDateFormat formatter = new SimpleDateFormat("yy_MM_dd_");
-		StringBuilder sb = new StringBuilder();
-		sb.append(formatter.format(new Date()));
-		sb.append(filterController.getCurrentFilterStrategy()
-				.getReportFileName());
-		sb.append(".xls");
+	private OnDemandStreamResource getExcelStreamResource() {
+		return new OnDemandStreamResource() {
+			
+			private static final long serialVersionUID = 746711523246311020L;
 
-		StreamResource resource = new StreamResource(
-				new StreamResource.StreamSource() {
-
-					/**
-					 * 
-					 */
-					private static final long serialVersionUID = 503814320458800520L;
-
-					@Override
-					public InputStream getStream() {
-						byte[] xlsFile = tableController.createXlsFile(
-								filterController.getCurrentFilterStrategy()
-										.getReportName(), filterController
-										.getCurrentFilterState().getFromDate(),
-								filterController.getCurrentFilterState()
-										.getToDate());
-						return new ByteArrayInputStream(xlsFile);
-					}
-				}, sb.toString());
-		return resource;
+			@Override
+			public InputStream getStream() {
+				byte[] xlsFile = tableController.createXlsFile(
+						filterController.getCurrentFilterStrategy()
+								.getReportName(), filterController
+								.getCurrentFilterState().getFromDate(),
+						filterController.getCurrentFilterState()
+								.getToDate());
+				return new ByteArrayInputStream(xlsFile);
+			}
+			
+			@Override
+			public String getFilename() {
+				SimpleDateFormat formatter = new SimpleDateFormat("yy_MM_dd_");
+				StringBuilder sb = new StringBuilder();
+				sb.append(formatter.format(new Date()));
+				sb.append(filterController.getCurrentFilterStrategy()
+						.getReportFileName());
+				sb.append(".xls");
+				
+				return sb.toString();
+			}
+		};
 	}
 	
-	/**
-	 * @param currentFilterState
-	 * @param report 
-	 */
-	private void setDataTable(FilterState currentFilterState, List<Report> report) {
-		//tableController.setData(
-		//		currentFilterState.getCheckedStatuses(),
-		//		currentFilterState.getServiceCategory(),
-		//		currentFilterState.getLifeSituation(), report);
-	}
-
 	private boolean validateDates(Date fromDate, Date toDate) {
 		StringBuilder message = new StringBuilder();
 		boolean isError = false;

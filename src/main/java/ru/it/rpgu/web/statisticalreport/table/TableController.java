@@ -20,6 +20,7 @@ import com.vaadin.ui.Component;
 public class TableController implements ITableController {
 	
 	private static final int TITLE_COLUMN_WIDTH = 250;
+	private static final int TITLE_COLUMN_WIDTH_BIG = 500;
 	private final TableView tableView;
 	private TableModelAgregator tableModel;
 	
@@ -149,7 +150,8 @@ public class TableController implements ITableController {
 		tableView.setTableCaptionCount(tableCaptionCount);
 		tableView.refresh();
 
-		tableView.addColumn(mainColumnTitle, TITLE_COLUMN_WIDTH);
+		int firstColWidth = statusColumnNames.size() == 0 ? TITLE_COLUMN_WIDTH_BIG : TITLE_COLUMN_WIDTH;
+		tableView.addColumn(mainColumnTitle, firstColWidth);
 		
 		if (serviceCategory != null && serviceCategory) {
 			tableView.addColumn(ReportConstants.CATEGORY_OF_SERVICE);

@@ -36,10 +36,10 @@ class TableView implements ITableView {
 	@Override
 	public void refresh() {
 		table = new Table();
-		// table.setSizeUndefined();
 		mainLayout.setContent(table);
 		table.setFooterVisible(true);
-		// table.setSizeFull();
+		table.setSizeUndefined();
+		table.setSizeFull();
 		table.setSortEnabled(false);
 		columnsCount = 0;
 		columnNames = new ArrayList<String>();
