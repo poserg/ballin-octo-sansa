@@ -1,7 +1,7 @@
 package ru.it.rpgu.web.statisticalreport.filter.strategies;
 
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 import ru.it.rpgu.web.statisticalreport.filter.FilterState;
 import ru.it.rpgu.web.statisticalreport.filter.statuses.StatusValue;
@@ -36,10 +36,10 @@ class FilterStateValidator {
 		return isError;
 	}
 	
-	private static boolean validateStatuses(StringBuilder message, Set<StatusValue> statusesSet) {
+	private static boolean validateStatuses(StringBuilder message, List<StatusValue> list) {
 		boolean isError = false;
 		
-		if (statusesSet == null || statusesSet.size() == 0) {
+		if (list.size() == 0) {
 			isError = true;
 			message.append("\nНеобходимо выбрать один или несколько статусов.");
 		}
@@ -63,7 +63,7 @@ class FilterStateValidator {
 	 */
 	private static void showMessage(boolean isError, StringBuilder message) {
 		if (isError) {
-			Notification.show("Ошибки в заполнении фильра:",
+			Notification.show("Ошибки в заполнении фильтра:",
 					message.toString(), Notification.TYPE_WARNING_MESSAGE);
 		}
 	}

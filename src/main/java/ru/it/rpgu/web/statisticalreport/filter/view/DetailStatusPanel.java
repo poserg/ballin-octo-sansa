@@ -1,7 +1,6 @@
 package ru.it.rpgu.web.statisticalreport.filter.view;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -18,12 +17,11 @@ public class DetailStatusPanel extends VerticalLayout {
 	private static final long serialVersionUID = 8069212395641221251L;
 	private static final String DETAIL_BY_STATUS = "Детализация по статусам:";
 	
-	private static final Set<StatusValue> statusValues = new HashSet<StatusValue>() {
+	private static final List<StatusValue> statusValues = new ArrayList<StatusValue>(){
 		private static final long serialVersionUID = 1L;
 
 		{
 			this.add(StatusValue.SEND_TO_OFFICE);
-			this.add(StatusValue.ERROR_SENDING_TO_OFFICE);
 			this.add(StatusValue.IN_REVIEWING);
 			this.add(StatusValue.REQUIRED_ADDITIONAL_INFO);
 			this.add(StatusValue.EXECUTED);
@@ -78,11 +76,12 @@ public class DetailStatusPanel extends VerticalLayout {
 		return mainCheckBox.getValue();
 	}
 
-	public Set<StatusValue> getStatuses() {
+	public List<StatusValue> getStatuses() {
 		if (isAllCheck()) {
 			return statusValues;
 		} else {
-			return (Set<StatusValue>) checkBoxGroup.getValue();
+			Set<StatusValue> values = (Set<StatusValue>) checkBoxGroup.getValue();
+			return new ArrayList<StatusValue>(values);
 		}
 	}
 }

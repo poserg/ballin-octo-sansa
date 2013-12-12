@@ -74,7 +74,7 @@ public class TableController implements ITableController {
 				int curCol = 0;
 				
 				String[] row = new String[colCount];
-				row[curCol++] = report.getName();
+				row[curCol++] = report.getName() != null ? report.getName() : ReportConstants.EMPTY_STRING;
 				
 				if (tableModel.getCategory()) {
 					String category = report.getApplicationStates().get(0).getCategory();
@@ -90,7 +90,8 @@ public class TableController implements ITableController {
 				row[curCol++] = table.getTotalCountByStatuses().get(i).toString();
 				
 				for (int j = 0; j < table.getTotalRow().size(); j++) { 
-					ApplicationState applicationState = report.getApplicationStates().get(j);
+					Integer currentIndex = tableModel.getStatusIndexes().get(j);
+					ApplicationState applicationState = report.getApplicationStates().get(currentIndex);
 					row[curCol++] = applicationState.getApplicationCount().toString();
 				}
 				

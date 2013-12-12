@@ -38,7 +38,7 @@ class OfficeFilterStrategy extends AbstractOfficeStrategy implements IFilterStra
 	public void getReport(ReportFilterStateModel searchParam,
 			FilterState currentFilterState, ITableController tableController) {
 		List<Report> reportList = StatisticalReportDAO.getDepartmentsReport(searchParam);
-		createTableModel(tableController, reportList);
+		createTableModel(tableController, currentFilterState.getCheckedStatuses(), reportList);
 	}
 
 	@Override

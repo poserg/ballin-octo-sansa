@@ -1,7 +1,7 @@
 package ru.it.rpgu.web.statisticalreport.filter;
 
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 import ru.it.rpgu.core.model.statisticalreport.ReportFilterStateModel;
 import ru.it.rpgu.web.statisticalreport.filter.statuses.StatusValue;
@@ -25,7 +25,7 @@ public class FilterState {
 	/**
 	 * Список выбранных статусов.
 	 */
-	Set<StatusValue> checkedStatuses;
+	List<StatusValue> checkedStatuses;
 
 	/**
 	 * Вид услуг.
@@ -73,15 +73,15 @@ public class FilterState {
 	/**
 	 * @return the checkedStatuses
 	 */
-	public Set<StatusValue> getCheckedStatuses() {
+	public List<StatusValue> getCheckedStatuses() {
 		return checkedStatuses;
 	}
 
 	/**
-	 * @param checkedStatuses the checkedStatuses to set
+	 * @param list the checkedStatuses to set
 	 */
-	public void setCheckedStatuses(Set<StatusValue> checkedStatuses) {
-		this.checkedStatuses = checkedStatuses;
+	public void setCheckedStatuses(List<StatusValue> list) {
+		this.checkedStatuses = list;
 	}
 
 	/**

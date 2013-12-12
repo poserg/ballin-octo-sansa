@@ -164,10 +164,9 @@ public class XlsView implements ITableView {
 		}
 		
 		// Название
-		if (cells.length >= captionCount) {
-			for (int i = 0; i < captionCount; i++)
-				createCell(cells[i].toString(), row, captionStyleName);
-		}
+		for (int i = 0; i < captionCount; i++) {
+			createCell(cells[i].toString(), row, captionStyleName);
+	        }
 		
 		for (int i = captionCount; i < cells.length; i++) {
 			createCell(cells[i].toString(), row, styleName);

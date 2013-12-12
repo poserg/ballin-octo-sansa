@@ -38,7 +38,7 @@ class OfficeAndStatusesFilterStrategy extends AbstractOfficeStrategy implements 
 	@Override
 	public void getReport(ReportFilterStateModel searchParam, FilterState filterState, ITableController tableController) {
 		List<Report> reportList = StatisticalReportDAO.getDepartmentByStatusesReport(searchParam);
-		createTableModel(tableController, reportList);
+		createTableModel(tableController, filterState.getCheckedStatuses(), reportList);
 	}
 
 	@Override

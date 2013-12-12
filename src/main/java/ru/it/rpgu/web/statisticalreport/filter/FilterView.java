@@ -3,7 +3,6 @@ package ru.it.rpgu.web.statisticalreport.filter;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import ru.it.rpgu.web.statisticalreport.filter.FilterController.IFilterView;
 import ru.it.rpgu.web.statisticalreport.filter.statuses.StatusValue;
@@ -151,7 +150,7 @@ class FilterView extends VerticalLayout implements IFilterView {
 	}
 
 	@Override
-	public Set<StatusValue> getCheckedStatuses() {
+	public List<StatusValue> getCheckedStatuses() {
 		return detailStatusPanel.getStatuses();
 	}
 

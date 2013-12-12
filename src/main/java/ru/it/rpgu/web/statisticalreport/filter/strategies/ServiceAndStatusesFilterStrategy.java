@@ -59,7 +59,7 @@ class ServiceAndStatusesFilterStrategy extends AbstractServiceStrategy implement
 			regionalReportList = StatisticalReportDAO.getServiceByStatusesReport(searchParam);
 		}
 
-		createTableModel(searchParam, tableController, municipalReportList, regionalReportList);
+		createTableModel(searchParam, tableController, currentFilterState.getCheckedStatuses(), municipalReportList, regionalReportList);
 	}
 
 	@Override

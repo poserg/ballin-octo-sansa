@@ -1,7 +1,7 @@
 package ru.it.rpgu.web.statisticalreport.filter;
 
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 import ru.it.rpgu.web.statisticalreport.filter.statuses.StatusValue;
 import ru.it.rpgu.web.statisticalreport.filter.strategies.IFilterStrategy;
@@ -91,7 +91,7 @@ public class FilterController {
 		 * Получить список выбранных статусов.
 		 * @return
 		 */
-		Set<StatusValue> getCheckedStatuses();
+		List<StatusValue> getCheckedStatuses();
 		
 		/**
 		 * Получить тип услуг.
