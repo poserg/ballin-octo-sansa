@@ -68,4 +68,9 @@ class ServiceFilterStrategy extends AbstractServiceStrategy implements IFilterSt
 	public String getReportFileName() {
 		return "service_report";
 	}
+
+	@Override
+	public boolean validateFitlerState(FilterState filterState) {
+		return FilterStateValidator.validateDates(filterState.getFromDate(), filterState.getToDate());
+	}
 }

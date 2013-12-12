@@ -71,4 +71,9 @@ class ServiceAndStatusesFilterStrategy extends AbstractServiceStrategy implement
 	public String getReportFileName() {
 		return "service_with_statuses_report";
 	}
+
+	@Override
+	public boolean validateFitlerState(FilterState filterState) {
+		return FilterStateValidator.validateAll(filterState);
+	}
 }

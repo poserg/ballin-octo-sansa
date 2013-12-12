@@ -50,4 +50,9 @@ class OfficeAndStatusesFilterStrategy extends AbstractOfficeStrategy implements 
 	public String getReportFileName() {
 		return "office_with_statuses_report";
 	}
+
+	@Override
+	public boolean validateFitlerState(FilterState filterState) {
+		return FilterStateValidator.validateAll(filterState);
+	}
 }

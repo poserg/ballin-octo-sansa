@@ -51,4 +51,9 @@ class OfficeFilterStrategy extends AbstractOfficeStrategy implements IFilterStra
 		return "office_report";
 	}
 
+	@Override
+	public boolean validateFitlerState(FilterState filterState) {
+		return FilterStateValidator.validateDates(filterState.getFromDate(), filterState.getToDate());
+	}
+
 }

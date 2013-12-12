@@ -8,6 +8,7 @@ import java.util.List;
 import ru.it.rpgu.core.model.statisticalreport.ApplicationState;
 import ru.it.rpgu.core.model.statisticalreport.Report;
 import ru.it.rpgu.web.statisticalreport.ReportConstants;
+import ru.it.rpgu.web.statisticalreport.filter.FilterState;
 import ru.it.rpgu.web.statisticalreport.table.model.ModelItem;
 import ru.it.rpgu.web.statisticalreport.table.model.TableModel;
 import ru.it.rpgu.web.statisticalreport.table.model.TableModelAgregator;
@@ -28,6 +29,8 @@ public class TableController implements ITableController {
 	private static final int TITLE_COLUMN_WIDTH_BIG = 500;
 	private final TableView tableView;
 	private TableModelAgregator tableModel;
+	private Date fromDate;
+	private Date toDate;
 	
 	public TableController() {
 		tableView = new TableView();
@@ -44,7 +47,7 @@ public class TableController implements ITableController {
 		generateTable(tableModel, tableView);
 	}
 	
-	public byte[] createXlsFile(String reportName, Date fromDate, Date toDate) {
+	public byte[] createXlsFile(String reportName) {
 		XlsView xlsView = new XlsView(reportName, fromDate, toDate);
 		generateTable(tableModel, xlsView);
 		return xlsView.getFile();
@@ -74,12 +77,12 @@ public class TableController implements ITableController {
 				row[curCol++] = report.getName();
 				
 				if (tableModel.getCategory()) {
-					String category = report.getCategory();
+					String category = report.getApplicationStates().get(0).getCategory();
 					row[curCol++] = category != null ? category : ReportConstants.EMPTY_STRING; //:TODO
 				}
 				
 				if (tableModel.getLifeSituation()) {
-					String lifeSituation = report.getLifeSituation();
+					String lifeSituation = report.getApplicationStates().get(0).getLifeSituation();
 					row[curCol++] = lifeSituation != null ? lifeSituation : ReportConstants.EMPTY_STRING; //:TODO
 				}
 				
@@ -185,5 +188,10 @@ public class TableController implements ITableController {
 		}
 		
 		return tableCaptionCount;
+	}
+	
+	public void setCurrentFilterState(FilterState filterState) {
+		toDate = filterState.getToDate();
+		fromDate = filterState.getFromDate();
 	}
 }

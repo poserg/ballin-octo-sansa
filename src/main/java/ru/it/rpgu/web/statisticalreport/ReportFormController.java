@@ -10,13 +10,13 @@ import ru.it.rpgu.core.model.statisticalreport.ReportFilterStateModel;
 import ru.it.rpgu.web.statisticalreport.OnDemandFileDownloader.OnDemandStreamResource;
 import ru.it.rpgu.web.statisticalreport.filter.FilterController;
 import ru.it.rpgu.web.statisticalreport.filter.FilterState;
+import ru.it.rpgu.web.statisticalreport.filter.strategies.IFilterStrategy;
 import ru.it.rpgu.web.statisticalreport.table.TableController;
 
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.Notification;
 
 /**
  * @author Sergey Popov (sergey_popov@relex.ru)
@@ -77,13 +77,13 @@ public class ReportFormController {
 			public void buttonClick(ClickEvent event) {
 				FilterState currentFilterState = filterController
 						.getCurrentFilterState();
+				IFilterStrategy currentFilterStrategy = filterController
+						.getCurrentFilterStrategy();
 				
-				if (validateDates(currentFilterState.getFromDate(),
-						currentFilterState.getToDate())) {
-
+				if (currentFilterStrategy.validateFitlerState(currentFilterState)) {
 					ReportFilterStateModel searchParam = FilterState.toSearchParam(currentFilterState);
 					
-					filterController.getCurrentFilterStrategy().getReport(searchParam, currentFilterState, tableController);
+					currentFilterStrategy.getReport(searchParam, currentFilterState, tableController);
 					view.showDownloadButtons();
 				}
 			}
@@ -109,12 +109,8 @@ public class ReportFormController {
 
 			@Override
 			public InputStream getStream() {
-				byte[] xlsFile = tableController.createXlsFile(
-						filterController.getCurrentFilterStrategy()
-								.getReportName(), filterController
-								.getCurrentFilterState().getFromDate(),
-						filterController.getCurrentFilterState()
-								.getToDate());
+				byte[] xlsFile = tableController.createXlsFile(filterController
+						.getCurrentFilterStrategy().getReportName());
 				return new ByteArrayInputStream(xlsFile);
 			}
 			
@@ -130,34 +126,6 @@ public class ReportFormController {
 				return sb.toString();
 			}
 		};
-	}
-	
-	private boolean validateDates(Date fromDate, Date toDate) {
-		StringBuilder message = new StringBuilder();
-		boolean isError = false;
-		Date today = new Date();
-
-		if (fromDate != null && fromDate.after(today)) {
-			message.append("\nДата начала ещё не наступила.");
-			isError = true;
-		}
-
-		if (toDate != null && toDate.after(today)) {
-			message.append("\nДата завершения ещё не наступила.");
-			isError = true;
-		}
-
-		if (fromDate != null && toDate != null && fromDate.after(toDate)) {
-			message.append("\nДата начала позже даты завершения.");
-			isError = true;
-		}
-
-		if (isError) {
-			Notification.show("Указан не верный диапазон дат",
-					message.toString(), Notification.TYPE_WARNING_MESSAGE);
-		}
-
-		return !isError;
 	}
 
 	public Component getView() {

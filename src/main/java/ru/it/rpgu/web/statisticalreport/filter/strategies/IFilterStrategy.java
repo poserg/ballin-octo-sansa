@@ -44,4 +44,11 @@ public interface IFilterStrategy {
 	 * @return
 	 */
 	String getReportFileName();
+	
+	/**
+	 * Проверка введенных пользователем данных.
+	 * @param filterState
+	 * @return
+	 */
+	boolean validateFitlerState(FilterState filterState);
 }
